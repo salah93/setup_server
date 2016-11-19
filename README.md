@@ -15,8 +15,8 @@ $ cat setup.sh
 commands='dnf install -y python; dnf install -y python2-dnf'
 user='root'
 inventory_file='hosts'
-for ip in $(grep -v '\[.*\]' $inventory_file); do
-    ssh $user@$ip '$commands'
+for ip in $(grep '[0-9]' $inventory_file); do
+    ssh $user@$ip $commands
 done
 $ bash setup.sh
 ```
