@@ -28,8 +28,3 @@ $ bash setup.sh
 ```
 ansible-playbook playbook.yml
 ```
-
-
-default password for jupyter notebook: `ilovejupyter8888`
-
-to change password read [here](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#preparing-a-hashed-password)

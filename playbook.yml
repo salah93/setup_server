@@ -1,5 +1,5 @@
 ---
-- hosts: notebooks
+- hosts: all
   vars:
     username: goku
     public_key: ~/.ssh/id_rsa.pub
