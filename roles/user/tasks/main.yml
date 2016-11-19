@@ -1,0 +1,23 @@
+---
+- name: Ensure wheel group present
+  group:
+    name: wheel
+    state: present
+
+- name: ensure wheel group has sudo privileges
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^%wheel"
+    line: "%wheel ALL=(ALL) NOPASSWD:ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: create user
+  user:
+    name: "{{ username }}"
+    groups: wheel
+
+- name: add authorized key
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ lookup('file', public_key) }}"

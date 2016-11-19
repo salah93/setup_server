@@ -1,0 +1,24 @@
+- name: download packages
+  become: true
+  dnf: 
+    name: "{{ item }}"
+  with_items:
+    - firewalld
+    - python-firewall
+  when: ansible_distribution == 'Fedora'
+- name: enable firewall
+  become: true
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  when: ansible_distribution == 'Fedora'
+- name: open jupyter notebook default port
+  become: true
+  firewalld: 
+    port: "{{ port }}/tcp"
+    zone: public 
+    permanent: true 
+    state: enabled 
+    immediate: yes
+  when: ansible_distribution == 'Fedora'

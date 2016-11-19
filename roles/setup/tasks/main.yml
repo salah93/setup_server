@@ -1,0 +1,24 @@
+# download python2-dnf
+- name: download packages
+  become: true
+  dnf: 
+    name: "{{ item }}"  
+  with_items:
+    - vim
+    - python-setuptools
+    - tmux
+    - libselinux-python
+  when: ansible_distribution == 'Fedora'
+- name: download packages
+  become: true
+  apt: 
+    name: "{{ item }}"  
+  with_items:
+    - vim
+    - python-setuptools
+    - tmux
+  when: ansible_distribution == 'Ubuntu'
+- name: install pip
+  become: true
+  easy_install: 
+    name: pip
