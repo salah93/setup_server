@@ -3,7 +3,9 @@
   become: true
   dnf: 
     name: "{{ item }}"  
+    state: latest
   with_items:
+    - vim-minimal
     - vim
     - python-setuptools
     - tmux

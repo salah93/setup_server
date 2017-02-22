@@ -1,11 +1,11 @@
 ---
 - hosts: all
+  user: root
   vars:
     username: goku
     public_key: ~/.ssh/id_rsa.pub
   roles:
     - setup
     - ssh
-    - fail2ban
     - user
     - firewall
