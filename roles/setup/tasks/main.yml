@@ -1,9 +1,23 @@
 # download python2-dnf
+---
+- name: install packages for ansible
+  gather_facts: false
+  become: true
+  raw: dnf -y install python2-dnf
+  changed_when: False
+  when: ansible_distribution == 'Fedora'
+
+- name: install packages for ansible
+  gather_facts: false
+  become: true
+  raw: apt install -y python-minimal
+  changed_when: False
+  when: ansible_distribution == 'Ubuntu'
+
 - name: download packages
   become: true
   dnf: 
     name: "{{ item }}"  
-    state: latest
   with_items:
     - vim-minimal
     - vim
@@ -25,14 +39,9 @@
     - tmux
   when: ansible_distribution == 'Ubuntu'
 
-- name: install pip
-  become: true
-  easy_install: 
-    name: pip
-
 - name: install python packages
   become: true
-  pip:
+  easy_install: 
     name: "{{ item }}"
     state: latest
     with_items:
