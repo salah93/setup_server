@@ -1,0 +1,31 @@
+---
+- name: setup mailx
+  become: "{{ username }}"
+  shell: mkdir ~/.certs; certutil -N -d ~/.certs
+    executable: /bin/bash
+
+- name: setup mailx
+  become: "{{ username }}"
+  shell: echo -n | openssl s_client -connect smtp.gmail.com:465 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ~/.certs/gmail.crt
+    executable: /bin/bash
+
+- name: setup mailx
+  become: "{{ username }}"
+  shell:  certutil -A -n "Google Internet Authority" -t "C,," -d ~/.certs -i ~/.certs/gmail.crt
+    executable: /bin/bash
+
+- name: add configuration to mail.rc
+  blockinfile:
+    path: /etc/mail.rc
+    block: |
+      account gmail {
+        set smtp-use-starttls
+        set ssl-verify=ignore
+        set smtp-auth=login
+        set smtp=smtp://smtp.gmail.com:587
+        set from="{{ email }}({{ username }})"
+        set smtp-auth-user="{{ email }}"
+        set smtp-auth-password="{{ email_password }}"
+        set ssl-verify=ignore
+        set nss-config-dir=/home/{{ username }}/.certs
+        }
