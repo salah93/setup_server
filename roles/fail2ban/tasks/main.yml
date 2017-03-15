@@ -1,0 +1,16 @@
+---
+- name: install fail2ban system package
+  package: name=fail2ban state=present
+
+- name: upload fail2ban configuration
+  template:
+    dest: /etc/fail2ban/jail.local
+    src: jail.local
+
+- name: prepare fail2ban service
+  command: systemd-tmpfiles --create
+  changed_when: False
+
+- name: restart fail2ban service
+  systemd: name=fail2ban enabled=yes state=restarted
+  changed_when: False
