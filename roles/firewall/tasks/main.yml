@@ -13,12 +13,3 @@
     state: started
     enabled: yes
   when: ansible_distribution == 'Fedora'
-- name: open jupyter notebook default port
-  become: true
-  firewalld: 
-    port: "{{ port }}/tcp"
-    zone: public 
-    permanent: true 
-    state: enabled 
-    immediate: yes
-  when: ansible_distribution == 'Fedora'
