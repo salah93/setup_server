@@ -20,4 +20,50 @@
 - name: add authorized key
   authorized_key:
     user: "{{ username }}"
-    key: "{{ lookup('file', public_key) }}"
+    key: https://github.com/"{{ github_user }}".keys
+
+- name: add directories
+  become: "{{ username }}"
+  file:
+    path: "~/{{ item }}"
+    state: directory
+    mode: 0755 
+  with_items:
+    - Projects
+    - Experiments
+    - .virtualenvs
+    - .vim/bundle
+
+
+- name: clone scripts directory
+  become: "{{ username }}"
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    with_items:
+      - { repo: "git@github.com:salah93/scripts.git", dest: "~/Projects"}
+      - { repo: "git@github.com:VundleVim/Vundle.vim.git", dest: "~/.vim/bundle/"}
+
+- name: link config files to script files
+  become: "{{ username }}"
+  file: 
+    src: "~/Projects/scripts/{{ item }}"
+    dest: "~/.{{ item }}"
+    state: link
+    force: yes
+    with_items:
+      - bashrc
+      - bash_profile
+      - vimrc
+      - gitconfig
+
+- name: install python packages
+  become: "{{ username }}"
+  pip:
+    name: "{{ item }}"
+    state: latest
+    virtualenv: "~/.virtualenvs/env"
+    with_items:
+      - requests
+      - ipython
+      - crosscompute
