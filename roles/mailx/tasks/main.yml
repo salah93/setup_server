@@ -1,4 +1,10 @@
 ---
+- name: install mailx
+  package:
+    name: mailx
+    state: latest
+
+
 - name: setup mailx
   become: "{{ username }}"
   shell: mkdir ~/.certs; certutil -N -d ~/.certs
