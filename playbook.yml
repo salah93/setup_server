@@ -2,10 +2,15 @@
 - hosts: all
   user: root
   vars:
+    github_user: salah93
     username: goku
-    public_key: ~/.ssh/id_rsa.pub
+    email: salah.ahmed.hslc@gmail.com
+    email_password: "{{ lookup('env','GMAIL_PW') }}"
+    ssh_port: 22
   roles:
     - setup
     - ssh
-    - user
     - firewall
+    - fail2ban
+    - user
+    - mailx
