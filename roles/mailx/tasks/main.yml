@@ -4,20 +4,22 @@
     name: mailx
     state: latest
 
-
 - name: setup mailx
   become: "{{ username }}"
-  shell: mkdir ~/.certs; certutil -N -d ~/.certs
+  shell:
+    free_form: mkdir ~/.certs; certutil -N -d ~/.certs
     executable: /bin/bash
 
 - name: setup mailx
   become: "{{ username }}"
-  shell: echo -n | openssl s_client -connect smtp.gmail.com:465 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ~/.certs/gmail.crt
+  shell:
+    free_form: echo -n | openssl s_client -connect smtp.gmail.com:465 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ~/.certs/gmail.crt
     executable: /bin/bash
 
 - name: setup mailx
   become: "{{ username }}"
-  shell:  certutil -A -n "Google Internet Authority" -t "C,," -d ~/.certs -i ~/.certs/gmail.crt
+  shell:
+    free_form: certutil -A -n "Google Internet Authority" -t "C,," -d ~/.certs -i ~/.certs/gmail.crt
     executable: /bin/bash
 
 - name: add configuration to mail.rc
