@@ -1,13 +1,20 @@
 ---
+- name: update vim
+  dnf: 
+    name: "vim-minimal"  
+    state: latest
+  when: ansible_distribution == 'Fedora'
+
 - name: download packages
   dnf: 
     name: "{{ item }}"  
   with_items:
-    - vim-minimal
-    - python-setuptools
-    - python2-dnf
+    - vim
+    - python-devel
     - git
     - tmux
+    - redhat-rpm-config
+    - gcc
     - libselinux-python
   when: ansible_distribution == 'Fedora'
 
@@ -16,10 +23,12 @@
   apt: 
     name: "{{ item }}"  
   with_items:
-    - git
-    - vim-minimal
+    - vim
     - python-setuptools
+    - git
     - tmux
+    - redhat-rpm-config
+    - gcc
   when: ansible_distribution == 'Ubuntu'
 
 - name: install python packages

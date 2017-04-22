@@ -5,8 +5,6 @@
     regexp: "^PermitRootLogin"
     line: "PermitRootLogin no"
     state: present
-  notify:
-    - "restart ssh"
 
 - name: Disable password auth
   lineinfile:

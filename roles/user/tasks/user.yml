@@ -1,41 +1,20 @@
 ---
 - name: add directories
   file:
-    path: "~/{{ item }}"
+    path: "$HOME/{{ item }}"
     state: directory
-    mode: 0755 
+    mode: 0755
   with_items:
-    - Projects
-    - Experiments
-    - .virtualenvs
-    - .vim/bundle
-
-- name: clone scripts directory
-  git:
-    accept_hostkey: yes
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
-  with_items:
-    - { repo: "git@github.com:invisibleroads/scripts.git", dest: "~/Projects"}
-    - { repo: "git@github.com:VundleVim/Vundle.vim.git", dest: "~/.vim/bundle/"}
-
-- name: link config files to script files
-  file: 
-    src: "~/Projects/scripts/{{ item }}"
-    dest: "~/.{{ item }}"
-    state: link
-    force: yes
-  with_items:
-    - bashrc
-    - bash_profile
-    - vimrc
-    - gitconfig
+    - "Experiments"
+    - "Projects"
+    - ".virtualenvs"
+    - ".vim/bundle"
 
 - name: install python packages
   pip:
     name: "{{ item }}"
     state: latest
-    virtualenv: "~/.virtualenvs/env"
+    virtualenv: "$HOME/.virtualenvs/env"
   with_items:
     - requests
     - ipython
