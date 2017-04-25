@@ -1,6 +1,5 @@
 ---
 - hosts: new_server
-  user: root
   vars:
     github_user: salah93
     username: goku
