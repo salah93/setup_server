@@ -18,3 +18,36 @@
   with_items:
     - requests
     - ipython
+
+- name: clone scripts
+  git:
+    accept_hostkey: yes
+    dest: "{{ item.dest }}"
+    repo: "https://github.com/{{ item.repo }}.git"
+  with_items:
+    - {"repo": "invisibleroads/scripts",
+       "dest": "~/.scripts"}
+    - {"repo": "VundleVim/Vundle.vim",
+       "dest": "~/.vim/bundle/Vundle.vim"}
+
+- name: install vim plugins
+  command: /usr/bin/vim +PluginInstall +qal
+  tags: xxx
+  register: hello
+
+- debug: msg="{{ hello.stdout }}"
+- debug: msg="{{ hello.stderr }}"
+
+- name: link rc files
+  file:
+    force: yes
+    path: "{{ item.dest }}"
+    state: link
+    src: "{{ item.src}}"
+  with_items:
+    - {"src": "~/.scripts/.bashrc",
+       "dest": "~/.bashrc"}
+    - {"src": "~/.scripts/.bash_profile",
+       "dest": "~/.bash_profile"}
+    - {"src": "~/.scripts/.vimrc",
+       "dest": "~/.vimrc"}
