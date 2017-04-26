@@ -1,8 +1,10 @@
 # set up environment to deploy notebooks on remote servers
 
 ## steps
-+ on local server put remote servers' ip addresses in <code>hosts</code> file
-+ run the ansible playbook with your ssh credentials
++ install ansible
+    sudo pip install ansible
++ on local machine put remote machines' ip addresses in `inventory` file
++ run the ansible playbook
 ```
-ansible-playbook playbook.yml
+ansible-playbook -i ./inventory playbook.yml
 ```
