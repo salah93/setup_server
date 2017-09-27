@@ -19,7 +19,6 @@
   when: ansible_distribution == 'Fedora'
 
 - name: download packages
-  become: true
   apt: 
     name: "{{ item }}"  
   with_items:
@@ -32,7 +31,6 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: install python packages
-  become: true
   easy_install: 
     name: "{{ item }}"
     state: latest
@@ -52,13 +50,3 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
-
-- name: create user
-  user:
-    name: "{{ username }}"
-    groups: wheel
-
-- name: add authorized key
-  authorized_key:
-    user: "{{ username }}"
-    key: https://github.com/{{ github_user }}.keys

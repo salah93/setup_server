@@ -1,15 +1,3 @@
 ---
-- name: download packages
-  dnf: 
-    name: "{{ item }}"
-  with_items:
-    - firewalld
-    - python-firewall
-  when: ansible_distribution == 'Fedora'
-
-- name: enable firewall
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
-  when: ansible_distribution == 'Fedora'
+- import_tasks: firewall.yml
+  become: true
