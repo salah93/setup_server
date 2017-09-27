@@ -1,2 +1,2 @@
-[new_server]
-104.131.110.228
+[target]
+localhost ansible_connection=local
