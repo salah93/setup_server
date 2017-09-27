@@ -1,6 +1,5 @@
 ---
 - name: Disable root login
-  become: true
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^PermitRootLogin"
@@ -8,7 +7,6 @@
     state: present
 
 - name: Disable password auth
-  become: true
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?PasswordAuthentication"
