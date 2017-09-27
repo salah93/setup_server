@@ -1,4 +1,4 @@
 ---
-- include: user.yml
+- import_tasks: user.yml
   become: yes
   become_user: "{{ username }}"

@@ -25,18 +25,11 @@
     dest: "{{ item.dest }}"
     repo: "https://github.com/{{ item.repo }}.git"
   with_items:
-    - {"repo": "invisibleroads/scripts",
-       "dest": "~/.scripts"}
     - {"repo": "VundleVim/Vundle.vim",
        "dest": "~/.vim/bundle/Vundle.vim"}
 
 - name: install vim plugins
   command: /usr/bin/vim +PluginInstall +qal
-  tags: xxx
-  register: hello
-
-- debug: msg="{{ hello.stdout }}"
-- debug: msg="{{ hello.stderr }}"
 
 - name: link rc files
   file:
@@ -45,9 +38,9 @@
     state: link
     src: "{{ item.src}}"
   with_items:
-    - {"src": "~/.scripts/.bashrc",
+    - {"src": "~/Projects/scripts/bashrc",
        "dest": "~/.bashrc"}
-    - {"src": "~/.scripts/.bash_profile",
+    - {"src": "~/Projects/scripts/bash_profile",
        "dest": "~/.bash_profile"}
-    - {"src": "~/.scripts/.vimrc",
+    - {"src": "~/Projects/scripts/vimrc",
        "dest": "~/.vimrc"}
