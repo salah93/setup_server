@@ -1,10 +1,7 @@
 ---
-- hosts: new_server
+- hosts: target
   vars:
-    github_user: salah93
-    username: goku
-    email: salah.ahmed.hslc@gmail.com
-    email_password: "{{ lookup('env','GMAIL_PW') }}"
+    username: sahmed
     ssh_port: 22
   roles:
     - setup
