@@ -13,3 +13,16 @@
     state: started
     enabled: yes
   when: ansible_distribution == 'Fedora'
+
+- name: open ssh port
+  firewalld:
+    port: "{{ ssh_port }}/tcp"
+    state: enabled
+    permanent: true
+  when: ansible_distribution == 'Fedora'
+
+- name: restart firewall
+  service:
+    name: firewalld
+    state: restarted
+  when: ansible_distribution == 'Fedora'
