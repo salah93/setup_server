@@ -23,10 +23,13 @@
   git:
     accept_hostkey: yes
     dest: "{{ item.dest }}"
-    repo: "https://github.com/{{ item.repo }}.git"
+    repo: "https://github.com/{{ item.repo }}"
   with_items:
     - {"repo": "VundleVim/Vundle.vim",
        "dest": "~/.vim/bundle/Vundle.vim"}
+    - {"repo": "salah93/dotfiles",
+       "dest": "~/Projects/dotfiles"}
+
 
 - name: install vim plugins
   command: /usr/bin/vim +PluginInstall +qal

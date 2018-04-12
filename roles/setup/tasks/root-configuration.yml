@@ -50,3 +50,14 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
+
+- name: add user
+  user:
+    name: "{{ username }}"
+    groups:
+     - wheel
+
+- name: add ssh keys
+  authorized_key:
+    user: "{{ username }}"
+    key: "https://github.com/salah93.keys"

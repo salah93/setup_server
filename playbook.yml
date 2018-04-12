@@ -1,8 +1,9 @@
 ---
 - hosts: target
   vars:
-    username: sahmed
+    username: salah
     ssh_port: 22
+  remote_user: root
   roles:
     - setup
     - ssh
