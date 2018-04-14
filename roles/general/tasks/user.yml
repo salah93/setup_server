@@ -16,7 +16,6 @@
     state: latest
     virtualenv: "$HOME/.virtualenvs/env"
   with_items:
-    - requests
     - ipython
 
 - name: clone scripts
@@ -27,6 +26,8 @@
   with_items:
     - {"repo": "VundleVim/Vundle.vim",
        "dest": "~/.vim/bundle/Vundle.vim"}
+    - {"repo": "salah93/dotfiles",
+       "dest": "~/Projects/"}
 
 - name: install vim plugins
   command: /usr/bin/vim +PluginInstall +qal
@@ -38,9 +39,9 @@
     state: link
     src: "{{ item.src}}"
   with_items:
-    - {"src": "~/Projects/scripts/bashrc",
+    - {"src": "~/Projects/dotfiles/bashrc",
        "dest": "~/.bashrc"}
-    - {"src": "~/Projects/scripts/bash_profile",
+    - {"src": "~/Projects/dotfiles/bash_profile",
        "dest": "~/.bash_profile"}
-    - {"src": "~/Projects/scripts/vimrc",
+    - {"src": "~/Projects/dotfiles/vimrc",
        "dest": "~/.vimrc"}

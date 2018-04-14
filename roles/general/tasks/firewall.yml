@@ -6,13 +6,8 @@
     - firewalld
     - python-firewall
   when: ansible_distribution == 'Fedora'
-
-- name: enable firewall
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
-  when: ansible_distribution == 'Fedora'
+  notify: 
+    - "start firewall"
 
 - name: open ssh port
   firewalld:
@@ -20,9 +15,5 @@
     state: enabled
     permanent: true
   when: ansible_distribution == 'Fedora'
-
-- name: restart firewall
-  service:
-    name: firewalld
-    state: restarted
-  when: ansible_distribution == 'Fedora'
+  notify: 
+    - "restart firewall"

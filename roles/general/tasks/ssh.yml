@@ -12,5 +12,10 @@
     regexp: "^#?PasswordAuthentication"
     line: "PasswordAuthentication no"
     state: present
-  notify:
-    - "restart ssh"
+
+- name: Change ssh port number
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#?Port "
+    line: "Port {{ssh_port}}"
+    state: present

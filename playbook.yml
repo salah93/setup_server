@@ -1,11 +1,5 @@
 ---
-- hosts: target
-  vars:
-    username: sahmed
-    ssh_port: 22
+- hosts: all
+  remote_user: root
   roles:
-    - setup
-    - ssh
-    - firewall
-    - fail2ban
-    - user
+    - general
