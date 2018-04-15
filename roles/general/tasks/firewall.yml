@@ -6,8 +6,6 @@
     - firewalld
     - python-firewall
   when: ansible_distribution == 'Fedora'
-  notify: 
-    - "start firewall"
 
 - name: open ssh port
   firewalld:

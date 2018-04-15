@@ -1,2 +1,5 @@
 *retry
 todo.md
+.terraform
+terraform.tfvars
+terraform.tfstate.backup

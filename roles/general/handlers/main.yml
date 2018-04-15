@@ -1,15 +1,5 @@
-- name: start firewall
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
-
 - name: restart firewall
   service:
     name: firewalld
     state: restarted
-
-- name: restart ssh
-  systemd:
-    name: sshd
-    state: restarted
+    enabled: yes

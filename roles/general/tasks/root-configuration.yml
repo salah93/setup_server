@@ -54,7 +54,8 @@
 - name: add privelaged user
   user:
     name: "{{ target_user.user }}"
-    groups: "wheel"
+    groups: 
+      - "wheel"
 
 - name: add authorized_keys for target_user
   authorized_key:

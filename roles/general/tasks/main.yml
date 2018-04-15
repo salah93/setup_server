@@ -12,5 +12,4 @@
   become: true
 
 - import_tasks: user.yml
-  become: true
   become: "{{ target_user.user }}"
