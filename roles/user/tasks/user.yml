@@ -41,9 +41,11 @@
     state: link
     src: "{{ item.src}}"
   with_items:
-    - {"src": "~/Projects/scripts/bashrc",
+    - {"src": "~/Projects/dotfiles/bashrc",
        "dest": "~/.bashrc"}
-    - {"src": "~/Projects/scripts/bash_profile",
+    - {"src": "~/Projects/dotfiles/bash_profile",
        "dest": "~/.bash_profile"}
-    - {"src": "~/Projects/scripts/vimrc",
+    - {"src": "~/Projects/dotfiles/vimrc",
        "dest": "~/.vimrc"}
+    - {"src": "~/Projects/dotfiles/tmux.conf",
+       "dest": "~/.tmux.conf"}

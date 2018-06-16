@@ -1,3 +1,4 @@
 *retry
 todo.md
-.terraform
+.terraform/
+terraform.tfvars

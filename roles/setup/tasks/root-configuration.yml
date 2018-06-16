@@ -3,7 +3,6 @@
   dnf: 
     name: "vim-minimal"  
     state: latest
-  when: ansible_distribution == 'Fedora'
 
 - name: download packages
   dnf: 
@@ -16,19 +15,6 @@
     - redhat-rpm-config
     - gcc
     - libselinux-python
-  when: ansible_distribution == 'Fedora'
-
-- name: download packages
-  apt: 
-    name: "{{ item }}"  
-  with_items:
-    - vim
-    - python-setuptools
-    - git
-    - tmux
-    - redhat-rpm-config
-    - gcc
-  when: ansible_distribution == 'Ubuntu'
 
 - name: install python packages
   easy_install: 
