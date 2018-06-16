@@ -1,0 +1,15 @@
+---
+- import_tasks: root-configuration.yml
+  become: true
+
+- import_tasks: ssh.yml
+  become: true
+
+- import_tasks: firewall.yml
+  become: true
+
+- import_tasks: fail2ban.yml
+  become: true
+
+- import_tasks: user.yml
+  become: "{{ target_user.user }}"

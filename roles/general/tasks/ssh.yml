@@ -6,7 +6,7 @@
     line: "PermitRootLogin no"
     state: present
 
-- name: replace ssh port
+- name: Replace ssh port
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?Port"

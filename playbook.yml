@@ -1,13 +1,10 @@
 ---
-- hosts: sandboxes
+- name: configure servers
+  hosts: sandboxes
   vars:
     username: salah
     ssh_port: 22
   remote_user: root
   gather_facts: no
   roles:
-    - setup
-    - ssh
-    - firewall
-    - fail2ban
-    - user
+    - general

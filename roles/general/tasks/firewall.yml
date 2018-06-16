@@ -12,7 +12,13 @@
     state: started
     enabled: yes
 
-- name: open ssh port
+- name: Close old ssh port
+  firewalld:
+    service: ssh
+    state: disabled
+    permanent: true
+
+- name: Open new ssh port
   firewalld:
     port: "{{ ssh_port }}/tcp"
     state: enabled

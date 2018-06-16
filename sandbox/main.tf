@@ -5,7 +5,7 @@ provider "digitalocean" {
 resource "digitalocean_droplet" "sandbox" {
     # Obtain ssh-key ids via api https://developers.digitalocean.com/documentation/v2/#list-all-keys
     # Alternatively, use ssh fingerprint `ssh-keygen -E md5 -lf ~/.ssh/id_rsa.pub | awk '{print $2}'`
-    ssh_keys           = ["5407023", "11430846", "19610406"]
+    ssh_keys           = "${var.ssh_keys}"
     image              = "${var.image}"
     region             = "${var.data_center}"
     size               = "${var.size}"
@@ -19,28 +19,20 @@ resource "digitalocean_droplet" "sandbox" {
     }
 
     provisioner "remote-exec" {
-        inline = ["dnf -y update",
+        inline = [#"dnf -y update",
                   "dnf install -y python2-dnf",
                  ]
     }
 
     provisioner "local-exec" {
         command = <<EOT
-            echo [sandboxes] > $INVENTORY
-            echo ${digitalocean_droplet.sandbox.ipv4_address} >> $INVENTORY
-            ansible-playbook $PLAYBOOK -i $INVENTORY
+            ansible-playbook -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
             EOT
 
         working_dir = ".."
         environment {
-            INVENTORY = "/tmp/inventory"
             PLAYBOOK = "playbook.yml"
         }
-    }
-
-    provisioner "local-exec" {
-        command = "echo backup data"
-        when    = "destroy"
     }
 }
 

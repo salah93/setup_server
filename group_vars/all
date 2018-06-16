@@ -1,0 +1,5 @@
+---
+host_name: sandbox
+ssh_port: 538
+target_user: {"key": "https://github.com/salah93.keys",
+              "user": "salah"}

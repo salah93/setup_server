@@ -2,6 +2,12 @@ variable "do_token" {
     description = "DigitalOcean Personal Access Token"
 }
 
+variable "ssh_keys" {
+    description = "ssh key ids for digital ocean"
+    type        = "list"
+    default    = ["5407023", "11430846", "19610406"]
+}
+
 variable "private_key" {
   description = "private key"
   default     = "~/.ssh/id_rsa"

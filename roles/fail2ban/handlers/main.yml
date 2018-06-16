@@ -1,3 +1,0 @@
-- name: restart fail2ban
-  systemd: name=fail2ban enabled=yes state=restarted
-  changed_when: False

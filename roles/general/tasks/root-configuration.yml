@@ -37,13 +37,13 @@
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
-- name: add user
+- name: add privelaged user
   user:
-    name: "{{ username }}"
-    groups:
-     - wheel
+    name: "{{ target_user.user }}"
+    groups: 
+      - "wheel"
 
-- name: add ssh keys
+- name: add authorized_keys for target_user
   authorized_key:
-    user: "{{ username }}"
-    key: "https://github.com/salah93.keys"
+    key: "{{ target_user.key }}"
+    user: "{{ target_user.user }}"
