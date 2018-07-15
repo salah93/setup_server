@@ -27,7 +27,7 @@
     - {"repo": "VundleVim/Vundle.vim",
        "dest": "~/.vim/bundle/Vundle.vim"}
     - {"repo": "salah93/dotfiles",
-       "dest": "~/Projects/"}
+       "dest": "~/Projects/dotfiles"}
 
 - name: install vim plugins
   command: /usr/bin/vim +PluginInstall +qal

@@ -28,6 +28,16 @@ variable "name" {
   default     = "sandbox"
 }
 
+variable "site-size" {
+  description = "Size of Droplet"
+  default     = "1gb"
+}
+
+variable "site-name" {
+  description = "Name of Droplet"
+  default     = "site"
+}
+
 variable "data_center" { 
   description = "Digital Ocean Data Center"
   default     = "nyc1"

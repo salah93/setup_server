@@ -12,15 +12,8 @@
     state: started
     enabled: yes
 
-- name: Close old ssh port
-  firewalld:
-    service: ssh
-    state: disabled
-    permanent: true
-
 - name: Open new ssh port
   firewalld:
     port: "{{ ssh_port }}/tcp"
     state: enabled
     permanent: true
-  notify: restart firewall
