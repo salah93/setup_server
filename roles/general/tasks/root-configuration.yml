@@ -1,28 +1,41 @@
----
-- name: update vim
-  dnf: 
-    name: "vim-minimal"  
-    state: latest
+- set_fact:
+    timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
 
-- name: download packages
-  dnf: 
-    name: "{{ item }}"  
+- name: put selinux in permissive mode
+  selinux: policy=targeted state=permissive
+  when: ansible_distribution == 'Fedora'
+
+- name: set hostname
+  hostname: name={{ host_name }}-{{ timestamp }}
+
+- name: install system packages
+  package: name={{ item }} state=present
   with_items:
+    - vim-minimal
     - vim
-    - python-devel
+    - gcc
     - git
     - tmux
-    - redhat-rpm-config
-    - gcc
     - libselinux-python
+    - policycoreutils-python
+    - policycoreutils-python-utils
+    - python3-devel
+    - redhat-rpm-config
+  when: ansible_distribution == 'Fedora'
 
-- name: install python packages
-  easy_install: 
-    name: "{{ item }}"
-    state: latest
-  with_items:
-    - pip
-    - virtualenv
+- name: install system packages
+  apt: name={{ packages }} state=present update_cache=yes
+  vars:
+    packages:
+      - vim-minimal
+      - vim
+      - build-essential
+      - git
+      - tmux
+      - policycoreutils-python-utils
+      - python-selinux
+      - python3-dev
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Ensure wheel group present
   group:
@@ -39,11 +52,11 @@
 
 - name: add privelaged user
   user:
-    name: "{{ target_user.user }}"
+    name: "{{ username }}"
     groups: 
       - "wheel"
 
 - name: add authorized_keys for target_user
   authorized_key:
-    key: "{{ target_user.key }}"
-    user: "{{ target_user.user }}"
+    key: "{{ keys }}"
+    user: "{{ username }}"

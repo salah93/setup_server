@@ -1,10 +1,22 @@
 ---
-- name: configure servers
+- name: bootstrap ansible
   hosts: all
-  vars:
-    username: salah
-    ssh_port: 22
-  remote_user: salah
-  gather_facts: no
+  gather_facts: false
+  become: true
+  tasks:
+    - name: install packages for ansible
+      package:
+        name: python-minimal
+        state: latest
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      changed_when: false
+    - name: install packages for ansible
+      package:
+        name: python3-dnf
+        state: latest
+      when: ansible_distribution == 'Fedora'
+      changed_when: false
+- name: configure servers
+  hosts: sandbox
   roles:
     - general

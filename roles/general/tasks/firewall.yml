@@ -1,19 +1,13 @@
 ---
-- name: download packages
-  dnf: 
+- name: download firewall packages
+  package:
     name: "{{ item }}"
   with_items:
     - firewalld
-    - python-firewall
+    - python3-firewall
 
 - name: enable firewall
   service:
     name: firewalld
     state: started
     enabled: yes
-
-- name: Open new ssh port
-  firewalld:
-    port: "{{ ssh_port }}/tcp"
-    state: enabled
-    permanent: true
