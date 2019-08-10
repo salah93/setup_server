@@ -10,6 +10,7 @@
     - ".virtualenvs"
     - ".vim/bundle"
 
+
 - name: install python packages
   pip:
     name: "{{ item }}"
@@ -17,6 +18,7 @@
     virtualenv: "$HOME/.virtualenvs/env"
   with_items:
     - ipython
+
 
 - name: clone scripts
   git:
@@ -29,8 +31,6 @@
     - {"repo": "salah93/dotfiles",
        "dest": "~/Projects/dotfiles"}
 
-- name: install vim plugins
-  command: /usr/bin/vim +PluginInstall +qal
 
 - name: link rc files
   file:
@@ -47,3 +47,7 @@
        "dest": "~/.vimrc"}
     - {"src": "~/Projects/dotfiles/tmux.conf",
        "dest": "~/.tmux.conf"}
+
+
+- name: install vim plugins
+  raw: vim +PluginInstall +qall

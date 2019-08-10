@@ -1,12 +1,15 @@
 - set_fact:
     timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
 
+
 - name: put selinux in permissive mode
   selinux: policy=targeted state=permissive
   when: ansible_distribution == 'Fedora'
 
+
 - name: set hostname
   hostname: name={{ host_name }}-{{ timestamp }}
+
 
 - name: install system packages
   package: name={{ item }} state=present
@@ -24,25 +27,80 @@
     - redhat-rpm-config
   when: ansible_distribution == 'Fedora'
 
+
+- name: get python3.6 repo
+  apt_repository:
+    repo: "ppa:jonathonf/python3.6"
+    state: present
+  tags:
+    - vim
+
+
 - name: install system packages
   apt: name={{ packages }} state=present update_cache=yes
   vars:
     packages:
-      - vim-minimal
-      - vim
       - build-essential
       - git
       - nginx
       - tmux
       - policycoreutils-python-utils
       - python-selinux
-      - python3-dev
+      - python3.6-dev
+      - python3-gdbm
+      - libncurses5-dev
+      - libgnome2-dev
+      - libgnomeui-dev
+      - libgtk2.0-dev
+      - libatk1.0-dev
+      - libbonoboui2-dev
+      - libcairo2-dev
+      - libx11-dev
+      - libxpm-dev
+      - libxt-dev
+      - lua5.1
+      - liblua5.1-dev
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vim
+
+- name: clone vim
+  git:
+    accept_hostkey: yes
+    dest: "~/"
+    repo: "https://github.com/vim/vim"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vim
+
+
+- name: configure vim
+  raw: cd ~/vim; ./configure --with-features=huge --enable-multiby --enable-rubyinterp=y --enable-python3interp=y --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-g --enable-perlinterp=y --enable-luainterp=yes --enable-gui=gtk2 --enable-csco --prefix=/usr/local
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vim
+
+
+- name: run make
+  raw: cd ~/vim; make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vim
+
+
+- name: install vim
+  raw: cd ~/vim; apt install checkinstall; sudo checkinstall
+
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  tags:
+    - vim
+
 
 - name: Ensure wheel group present
   group:
     name: wheel
     state: present
+
 
 - name: ensure wheel group has sudo privileges
   lineinfile:
@@ -52,11 +110,13 @@
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
 
+
 - name: add privelaged user
   user:
     name: "{{ username }}"
-    groups: 
+    groups:
       - "wheel"
+
 
 - name: add authorized_keys for target_user
   authorized_key:
