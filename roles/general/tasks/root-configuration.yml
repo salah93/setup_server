@@ -15,6 +15,7 @@
     - vim
     - gcc
     - git
+    - nginx
     - tmux
     - libselinux-python
     - policycoreutils-python
@@ -31,6 +32,7 @@
       - vim
       - build-essential
       - git
+      - nginx
       - tmux
       - policycoreutils-python-utils
       - python-selinux
