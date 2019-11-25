@@ -14,8 +14,7 @@
 - name: install system packages
   package: name={{ item }} state=present
   with_items:
-    - vim-minimal
-    - vim
+    - vim-enhanced
     - gcc
     - git
     - nginx
@@ -26,14 +25,6 @@
     - python3-devel
     - redhat-rpm-config
   when: ansible_distribution == 'Fedora'
-
-
-- name: get python3.6 repo
-  apt_repository:
-    repo: "ppa:jonathonf/python3.6"
-    state: present
-  tags:
-    - vim
 
 
 - name: install system packages
@@ -60,37 +51,6 @@
       - libxt-dev
       - lua5.1
       - liblua5.1-dev
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - vim
-
-- name: clone vim
-  git:
-    accept_hostkey: yes
-    dest: "~/"
-    repo: "https://github.com/vim/vim"
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - vim
-
-
-- name: configure vim
-  raw: cd ~/vim; ./configure --with-features=huge --enable-multiby --enable-rubyinterp=y --enable-python3interp=y --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-g --enable-perlinterp=y --enable-luainterp=yes --enable-gui=gtk2 --enable-csco --prefix=/usr/local
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - vim
-
-
-- name: run make
-  raw: cd ~/vim; make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - vim
-
-
-- name: install vim
-  raw: cd ~/vim; apt install checkinstall; sudo checkinstall
-
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   tags:
     - vim
