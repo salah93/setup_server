@@ -1,0 +1,13 @@
+---
+- name: start firewall
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: start fail2ban
+  systemd:
+    -name: fail2ban
+    -enabled: yes
+    -state: restarted
+  changed_when: False

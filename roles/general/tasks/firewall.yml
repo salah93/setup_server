@@ -5,9 +5,5 @@
   with_items:
     - firewalld
     - python3-firewall
-
-- name: enable firewall
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
+  notify:
+    - start firewall
