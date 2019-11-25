@@ -61,7 +61,3 @@
        "dest": "~/.vimrc"}
     - {"src": "~/Projects/dotfiles/tmux.conf",
        "dest": "~/.tmux.conf"}
-
-
-- name: install vim plugins
-  raw: vim +PluginInstall +qall
