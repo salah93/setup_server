@@ -1,5 +1,6 @@
 ---
 host_name: sandbox
-ssh_port: 347
 username: salah
 keys: "https://github.com/salah93.keys"
+full_name: Salah Ahmed
+email: salahs.email@pm.me

@@ -20,6 +20,20 @@
     - ipython
 
 
+- name: configure git email
+  git_config:
+    name: user.email
+    scope: global
+    value: "{{ email }}"
+
+
+- name: configure git name
+  git_config:
+    name: user.name
+    scope: global
+    value: "{{ full_name }}"
+
+
 - name: clone scripts
   git:
     accept_hostkey: yes
