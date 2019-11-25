@@ -6,7 +6,7 @@ action = %(action_mwl)s
 
 [sshd]
 enabled = true
-port = ssh,sftp,{{ ssh_port }}
+port = ssh,sftp
 
 [nginx]
 enabled = true
