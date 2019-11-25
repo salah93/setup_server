@@ -14,6 +14,7 @@
 - name: install system packages
   package: name={{ item }} state=present
   with_items:
+    - direnv
     - vim-enhanced
     - gcc
     - git
@@ -35,6 +36,7 @@
       - git
       - nginx
       - tmux
+      - direnv
       - policycoreutils-python-utils
       - python-selinux
       - python3.6-dev
