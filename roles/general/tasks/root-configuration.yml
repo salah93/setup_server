@@ -20,9 +20,6 @@
     - git
     - nginx
     - tmux
-    - libselinux-python
-    - policycoreutils-python
-    - policycoreutils-python-utils
     - python3-devel
     - redhat-rpm-config
   when: ansible_distribution == 'Fedora'
