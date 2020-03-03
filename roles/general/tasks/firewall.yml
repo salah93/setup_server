@@ -5,7 +5,6 @@
   with_items:
     - firewalld
     - python3-firewall
-
 - name: start firewall
   service:
     name: firewalld

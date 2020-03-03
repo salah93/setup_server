@@ -5,7 +5,6 @@
     regexp: "^PermitRootLogin"
     line: "PermitRootLogin no"
     state: present
-
 - name: Disable password auth
   lineinfile:
     dest: /etc/ssh/sshd_config

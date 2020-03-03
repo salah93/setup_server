@@ -9,7 +9,6 @@
     - "Projects"
     - ".virtualenvs"
     - ".vim/bundle"
-
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
@@ -18,7 +17,6 @@
   become_user: root
   tags:
     - pip
-
 - name: install python packages
   pip:
     name: ['ipython']
@@ -26,21 +24,16 @@
     virtualenv: "$HOME/.virtualenvs/env"
   tags:
     - pip
-
 - name: configure git email
   git_config:
     name: user.email
     scope: global
     value: "{{ email }}"
-
-
 - name: configure git name
   git_config:
     name: user.name
     scope: global
     value: "{{ full_name }}"
-
-
 - name: clone scripts
   git:
     accept_hostkey: yes
@@ -51,8 +44,6 @@
        "dest": "~/.vim/bundle/Vundle.vim"}
     - {"repo": "salah93/dotfiles",
        "dest": "~/Projects/dotfiles"}
-
-
 - name: link rc files
   file:
     force: yes

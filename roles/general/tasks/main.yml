@@ -3,22 +3,18 @@
   become: true
   tags:
     - root
-
 - import_tasks: ssh.yml
   become: true
   tags:
     - ssh
-
 - import_tasks: firewall.yml
   become: true
   tags:
     - firewall
-
 - import_tasks: fail2ban.yml
   become: true
   tags:
     - fail2ban
-
 - import_tasks: user.yml
   tags:
     - user

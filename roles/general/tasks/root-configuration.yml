@@ -1,16 +1,9 @@
+---
 - set_fact:
     timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
-
-
 - name: put selinux in permissive mode
   selinux: policy=targeted state=permissive
   when: ansible_distribution == 'Fedora'
-
-
-- name: set hostname
-  hostname: name={{ host_name }}-{{ timestamp }}
-
-
 - name: install system packages
   package: name={{ item }} state=present
   with_items:
@@ -23,12 +16,10 @@
     - python3-devel
     - redhat-rpm-config
   when: ansible_distribution == 'Fedora'
-
-
 - name: install system packages
-  apt: name={{ packages }} state=present update_cache=yes
+  apt: name={{ item }} state=present update_cache=yes
   vars:
-    packages:
+    with_items:
       - build-essential
       - git
       - nginx
@@ -51,16 +42,10 @@
       - lua5.1
       - liblua5.1-dev
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-  tags:
-    - vim
-
-
 - name: Ensure wheel group present
   group:
     name: wheel
     state: present
-
-
 - name: ensure wheel group has sudo privileges
   lineinfile:
     dest: /etc/sudoers
@@ -68,15 +53,11 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
-
-
 - name: add privelaged user
   user:
     name: "{{ username }}"
     groups:
       - "wheel"
-
-
 - name: add authorized_keys for target_user
   authorized_key:
     key: "{{ keys }}"

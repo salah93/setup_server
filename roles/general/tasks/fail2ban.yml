@@ -3,15 +3,12 @@
   package:
     name: fail2ban
     state: present
-
 - name: prepare fail2ban service
   command: systemd-tmpfiles --create
-
 - name: upload fail2ban configuration
   template:
     dest: /etc/fail2ban/jail.local
     src: jail.local
-
 - name: start fail2ban
   systemd:
     name: fail2ban
