@@ -1,6 +1,6 @@
 ---
-host_name: sandbox
 username: salah
 keys: "https://github.com/salah93.keys"
 full_name: Salah Ahmed
 email: salahs.email@pm.me
+kafka_url: "http://apache-mirror.8birdsvideo.com/kafka/2.4.0/kafka_2.12-2.4.0.tgz"
