@@ -4,24 +4,22 @@
   gather_facts: false
   become: true
   tasks:
-    - name: install packages for ansible
+    - name: install python for ansible
       package:
         name: python-minimal
         state: latest
-      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      ignore_errors: yes
       changed_when: false
     - name: install packages for ansible
       package:
         name: python3-dnf
         state: latest
-      when: ansible_distribution == 'Fedora'
+      ignore_errors: yes
       changed_when: false
-
 - name: configure servers
   hosts: sandbox
   roles:
     - general
-
 - name: set up kafka
   hosts: kafka
   roles:
