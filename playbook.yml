@@ -16,7 +16,14 @@
         state: latest
       when: ansible_distribution == 'Fedora'
       changed_when: false
+
 - name: configure servers
   hosts: sandbox
   roles:
     - general
+
+- name: set up kafka
+  hosts: kafka
+  roles:
+    - general
+    - kafka
