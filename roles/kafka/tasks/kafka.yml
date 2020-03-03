@@ -1,0 +1,13 @@
+---
+- name: add kafka directory
+  file:
+    path: "$HOME/Projects/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "kafka"
+- name: download kafka
+  unarchive:
+    src: "{{ kafka_url }}"
+    dest: "~/Projects/kafka"
+    remote_src: yes

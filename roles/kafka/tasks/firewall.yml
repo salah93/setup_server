@@ -1,0 +1,19 @@
+---
+- name: Open port 9092
+  firewalld:
+    rich_rule: rule family="ipv4" source address="'{{ item }}'/32" port protocol="tcp" port="9092" accept
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - "{{ groups['kafka'] }}"
+- name: Open port 2181
+  firewalld:
+    rich_rule: rule family="ipv4" source address="'{{ item }}'/32" port protocol="tcp" port="2181" accept
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - "{{ groups['kafka'] }}"
