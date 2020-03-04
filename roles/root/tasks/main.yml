@@ -7,11 +7,6 @@
   name: build python
   tags:
     - python
-  vars:
-    python_versions:
-      - 3.5.7
-      - 3.6.10
-      - 3.7.6
   become: true
 - import_tasks: vim.yml
   name: build vim
