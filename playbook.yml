@@ -33,7 +33,7 @@
     - security
     - kafka
 - name: set up vagrant
-  hosts: kafka
+  hosts: vagrant
   roles:
     - root
     - user
