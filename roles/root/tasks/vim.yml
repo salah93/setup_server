@@ -57,8 +57,8 @@
       - --with-features=huge
       - --enable-multibyte
       - --enable-python3interp=yes
-      - --with-python3-command=/usr//bin/python3.5
-      - --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu
+      - --with-python3-command=/usr/local/bin/python3.6
+      - --with-python3-config-dir=$(python3.6m-config --configdir)
       - --enable-cscope
       - --prefix=/usr/local
     chdir: /tmp/vim

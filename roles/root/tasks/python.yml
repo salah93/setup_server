@@ -25,7 +25,7 @@
   when: ansible_distribution == 'Fedora'
 
 - name: fetch python tarballs
-  get_url:      
+  get_url:
     url: https://www.python.org/ftp/python/{{ item }}/Python-{{ item }}.tgz
     dest: /usr/local/src/Python-{{ item }}.tar.gz
     mode: 0644
@@ -43,9 +43,15 @@
   tags: [ build ]
 
 - name: configure python src with optimizations
-  command: >
-    ./configure --prefix=/usr/local --enable-optimizations --with-ensurepip=install --enable-loadable-sqlite-extensions
-  args:
+  command:
+    argv:
+      - ./configure
+      - --prefix=/usr/local
+      - --enable-optimizations
+      - --with-ensurepip=install
+      - --enable-loadable-sqlite-extensions
+      - --enable-shared
+      - LDFLAGS="-Wl,-rpath /usr/local/lib"
     chdir: /usr/local/src/Python-{{ item }}
   loop: "{{ python_versions }}"
   tags: [ build ]
