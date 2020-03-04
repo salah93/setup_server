@@ -15,9 +15,8 @@
       - python-dev
       - python3-dev
       - git
-  become: true
-  tags: 
-    - build 
+  tags:
+    - build
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: install build dependencies
   apt:
@@ -29,8 +28,7 @@
       - python3
       - python3-devel
       - tcl-devel
-  become: true
-  tags: 
+  tags:
     - build
   when: ansible_distribution == 'Fedora'
 - name: remove vim
@@ -39,30 +37,42 @@
       - vim
       - vim-runtime
       - gvim
-      - vim-tiny 
-      - vim-common 
-      - vim-gui-common 
+      - vim-tiny
+      - vim-common
+      - vim-gui-common
       - vim-nox
     state: absent
-  become: true
   tags:
     - remove
 - name: clone vim
   git:
     dest: /tmp/vim
-    repo: "https://github.com/vim/vim
+    repo: https://github.com/vim/vim
   tags:
     - install
 - name: configure vim
-  raw: cd /tmp/vim; ./configure --with-features=huge --enable-multibyte --enable-python3interp=yes --with-python3-config-dir=$(python3-config --configdir) --enable-cscope --prefix=/usr/local
+  command:
+    argv:
+      - ./configure
+      - --with-features=huge
+      - --enable-multibyte
+      - --enable-python3interp=yes
+      - --with-python3-command=/usr//bin/python3.5
+      - --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu
+      - --enable-cscope
+      - --prefix=/usr/local
+    chdir: /tmp/vim
   tags:
     - install
 - name: make
-  raw: cd /tmp/vim; make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
+  command:
+    chdir: /tmp/vim
+    cmd: make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
   tags:
     - install
 - name: make install
-  raw: cd /tmp/vim; make install
-  become: true
+  command:
+    chdir: /tmp/vim
+    cmd: make install
   tags:
     - install

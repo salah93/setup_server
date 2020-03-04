@@ -29,6 +29,7 @@
     - nginx
     - python-dev
     - python3-dev
+    - cmake
     - tmux
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: Ensure wheel group present

@@ -22,6 +22,7 @@
       - wget
       - zlib-devel
   tags: [ build ]
+  when: ansible_distribution == 'Fedora'
 
 - name: fetch python tarballs
   get_url:      

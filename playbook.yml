@@ -1,32 +1,19 @@
 ---
 - name: bootstrap ansible
   hosts: all
-  gather_facts: false
-  become: true
   tasks:
     - set_fact:
         timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
-    - name: install python for ansible
-      package:
-        name: python-minimal
-        state: latest
-      ignore_errors: yes
-      changed_when: false
-    - name: install packages for ansible
-      package:
-        name: python3-dnf
-        state: latest
-      ignore_errors: yes
-      changed_when: false
 - name: configure servers
   hosts: sandbox
   roles:
     - root
     - user
     - security
-    - general
 - name: set up kafka
   hosts: kafka
+  vars:
+    kafka_url: "http://apache-mirror.8birdsvideo.com/kafka/2.4.0/kafka_2.12-2.4.0.tgz"
   roles:
     - root
     - user
@@ -34,6 +21,9 @@
     - kafka
 - name: set up vagrant
   hosts: vagrant
+  vars:
+    username: vagrant
+    email: sahmed@resy.com
   roles:
     - root
     - user
