@@ -44,6 +44,8 @@
        "dest": "~/.vim/bundle/Vundle.vim"}
     - {"repo": "salah93/dotfiles",
        "dest": "~/Projects/dotfiles"}
+    - {"repo": "salah93/cltools",
+       "dest": "~/Projects/scripts"}
 - name: link rc files
   file:
     force: yes
@@ -59,3 +61,5 @@
        "dest": "~/.vimrc"}
     - {"src": "~/Projects/dotfiles/tmux.conf",
        "dest": "~/.tmux.conf"}
+    - {"src": "~/Projects/scripts",
+       "dest": "~/.scripts"}
