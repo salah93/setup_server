@@ -1,0 +1,116 @@
+---
+- name: install build dependencies
+  yum:
+    name:
+      - bzip2
+      - bzip2-devel
+      - gcc
+      - gcc-c++
+      - geos
+      - geos-devel
+      - gnutls-devel
+      - gzip
+      - libffi-devel
+      - libmemcached-devel
+      - make
+      - ncurses-devel
+      - openssl-devel
+      - pcre-devel
+      - postgresql-devel
+      - readline-devel
+      - sqlite-devel
+      - wget
+      - zlib-devel
+  tags: [ build ]
+
+- name: fetch python tarballs
+  get_url:      
+    url: https://www.python.org/ftp/python/{{ item }}/Python-{{ item }}.tgz
+    dest: /usr/local/src/Python-{{ item }}.tar.gz
+    mode: 0644
+    owner: root
+    group: wheel
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+- name: extract tarball
+  unarchive:
+    src: /usr/local/src/Python-{{ item }}.tar.gz
+    dest: /usr/local/src
+    remote_src: yes
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+- name: configure python src with optimizations
+  command: >
+    ./configure --prefix=/usr/local --enable-optimizations --with-ensurepip=install --enable-loadable-sqlite-extensions
+  args:
+    chdir: /usr/local/src/Python-{{ item }}
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+- name: compile python
+  command: make -j8 build_all
+  args:
+    chdir: /usr/local/src/Python-{{ item }}
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+- name: install python
+  command: make -j8 altinstall
+  args:
+    chdir: /usr/local/src/Python-{{ item }}
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+## cleanup src code
+- name: cleanup python src (1)
+  file:
+    path: /usr/local/src/Python-{{ item }}.tar.gz
+    state: absent
+  loop: "{{ python_versions }}"
+  tags: [ cleanup ]
+
+- name: cleanup python src (2)
+  file:
+    path: /usr/local/src/Python-{{ item }}
+    state: absent
+  loop: "{{ python_versions }}"
+  tags: [ cleanup ]
+
+- name: did we install a python3.7?
+  set_fact:
+    python37_installed: True
+  when: ("3.7") in python_versions | map('version_minor')
+  tags: [ build ]
+
+## drop a pip3.7 wrapper if it doesn't exist
+- name: does pip3.7 exist?
+  stat:
+    path: /usr/local/bin/pip3.7
+  register: pip37
+  tags: [ build ]
+
+- name: drop a pip3.7 wrapper script
+  copy:
+    content: |
+      #!/usr/bin/env bash
+      /usr/local/bin/python3.7 -m pip "$@"
+    dest: "/usr/local/bin/pip3.7"
+    mode: 0755
+    owner: root
+    group: root
+  when: python37_installed is defined and pip37.stat.exists == False
+  tags: [ build ]
+
+## pip upgrade
+- name: pip upgrade
+  command: "/usr/local/bin/python{{ item | version_minor }} -m pip install --upgrade pip"
+  loop: "{{ python_versions }}"
+  tags: [ build ]
+
+## some important libs
+- name: install pip packages
+  command: "/usr/local/bin/python{{ item | version_minor }} -m pip install --upgrade boto3 netifaces virtualenv"
+  loop: "{{ python_versions }}"
+  tags: [ build ]

@@ -62,3 +62,13 @@
   authorized_key:
     key: "{{ keys }}"
     user: "{{ username }}"
+- import_tasks: python.yml
+  name: build python
+  tags:
+    - python
+  vars:
+    python_versions:
+      - 3.5.7
+      - 3.6.10
+      - 3.7.6
+  when: ansible_distribution == 'Fedora'
