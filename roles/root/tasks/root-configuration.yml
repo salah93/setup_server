@@ -1,22 +1,19 @@
 ---
-- set_fact:
-    timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
 - name: put selinux in permissive mode
   selinux: policy=targeted state=permissive
   when: ansible_distribution == 'Fedora'
 - name: install system packages
   package: name={{ item }} state=present
   with_items:
+    - ctags
     - direnv
-    - vim-enhanced
     - gcc
     - git
     - nginx
-    - tmux
     - python3-devel
     - redhat-rpm-config
+    - tmux
   when: ansible_distribution == 'Fedora'
-
 - name: install system packages
   apt: 
       name: "{{ item }}"
@@ -24,22 +21,15 @@
       update_cache: yes
   with_items:
     - build-essential
-    - git
-    - nginx
-    - tmux
+    - ctags
     - direnv
-    - libncurses5-dev
-    - libgnome2-dev
-    - libgnomeui-dev
-    - libgtk2.0-dev
-    - libatk1.0-dev
-    - libbonoboui2-dev
-    - libcairo2-dev
-    - libx11-dev
-    - libxpm-dev
-    - libxt-dev
-    - lua5.1
-    - liblua5.1-dev
+    - git
+    - libreadline-dev
+    - libsqlite3-dev
+    - nginx
+    - python-dev
+    - python3-dev
+    - tmux
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: Ensure wheel group present
   group:
@@ -61,13 +51,3 @@
   authorized_key:
     key: "{{ keys }}"
     user: "{{ username }}"
-- import_tasks: python.yml
-  name: build python
-  tags:
-    - python
-  vars:
-    python_versions:
-      - 3.5.7
-      - 3.6.10
-      - 3.7.6
-  when: ansible_distribution == 'Fedora'

@@ -1,0 +1,19 @@
+---
+- import_tasks: root-configuration.yml
+  become: true
+  tags:
+    - root
+- import_tasks: python.yml
+  name: build python
+  tags:
+    - python
+  vars:
+    python_versions:
+      - 3.5.7
+      - 3.6.10
+      - 3.7.6
+  when: ansible_distribution == 'Fedora'
+- import_tasks: vim.yml
+  name: build vim
+  tags:
+    - vim

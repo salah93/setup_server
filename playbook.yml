@@ -4,6 +4,8 @@
   gather_facts: false
   become: true
   tasks:
+    - set_fact:
+        timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
     - name: install python for ansible
       package:
         name: python-minimal
@@ -19,9 +21,19 @@
 - name: configure servers
   hosts: sandbox
   roles:
+    - root
+    - user
+    - security
     - general
 - name: set up kafka
   hosts: kafka
   roles:
-    - general
+    - root
+    - user
+    - security
     - kafka
+- name: set up vagrant
+  hosts: kafka
+  roles:
+    - root
+    - user
