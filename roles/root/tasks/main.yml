@@ -18,3 +18,8 @@
   tags:
     - vim
   become: true
+- import_tasks: git.yml
+  name: install latest git
+  tags:
+    - git
+  become: true

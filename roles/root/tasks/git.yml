@@ -1,0 +1,14 @@
+---
+- name: Add Repo
+  command:
+    cmd: add-apt-repository ppa:git-core/ppa
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- name: Update Apt
+  command:
+    cmd: apt update
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- name: Install git
+  apt:
+    name:
+      - git
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
