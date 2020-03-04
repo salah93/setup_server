@@ -11,10 +11,12 @@
   become: true
   tags:
     - firewall
+  when: ansible_distribution == 'Fedora'
 - import_tasks: fail2ban.yml
   become: true
   tags:
     - fail2ban
+  when: ansible_distribution == 'Fedora'
 - import_tasks: user.yml
   tags:
     - user

@@ -16,31 +16,30 @@
     - python3-devel
     - redhat-rpm-config
   when: ansible_distribution == 'Fedora'
+
 - name: install system packages
-  apt: name={{ item }} state=present update_cache=yes
-  vars:
-    with_items:
-      - build-essential
-      - git
-      - nginx
-      - tmux
-      - direnv
-      - policycoreutils-python-utils
-      - python-selinux
-      - python3.6-dev
-      - python3-gdbm
-      - libncurses5-dev
-      - libgnome2-dev
-      - libgnomeui-dev
-      - libgtk2.0-dev
-      - libatk1.0-dev
-      - libbonoboui2-dev
-      - libcairo2-dev
-      - libx11-dev
-      - libxpm-dev
-      - libxt-dev
-      - lua5.1
-      - liblua5.1-dev
+  apt: 
+      name: "{{ item }}"
+      state: present 
+      update_cache: yes
+  with_items:
+    - build-essential
+    - git
+    - nginx
+    - tmux
+    - direnv
+    - libncurses5-dev
+    - libgnome2-dev
+    - libgnomeui-dev
+    - libgtk2.0-dev
+    - libatk1.0-dev
+    - libbonoboui2-dev
+    - libcairo2-dev
+    - libx11-dev
+    - libxpm-dev
+    - libxt-dev
+    - lua5.1
+    - liblua5.1-dev
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: Ensure wheel group present
   group:
