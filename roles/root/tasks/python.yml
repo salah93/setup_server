@@ -121,3 +121,8 @@
   command: "/usr/local/bin/python{{ item | version_minor }} -m pip install --upgrade boto3 netifaces virtualenv"
   loop: "{{ python_versions }}"
   tags: [ build ]
+
+- name: reload ldconfig
+  command:
+    cmd: ldconfig
+  tags: [ build ]
