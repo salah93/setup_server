@@ -5,4 +5,6 @@ terraform.tfvars
 terraform.tfstate.backup
 env/
 __pycache__
-.ansible.secret
+.gitsecret/keys/random_seed
+!*.secret
+.ansible-secret
