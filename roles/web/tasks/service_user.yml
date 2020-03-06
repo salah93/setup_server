@@ -35,8 +35,13 @@
     state: link
     path: "{{ item.dest }}"
     src: "{{ item.src}}"
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
   with_items:
-    - {"src": "$HOME/{{ appname }}",
+    - {"src": "/home/{{ appname }}/{{ appname }}",
        "dest": "/opt/{{ appname }}"}
-    - {"src": "$HOME/.virtualenvs",
+    - {"src": "/home/{{ appname }}/.virtualenvs",
        "dest": "/opt/venvs"}
+  become: true
+  become_user: root
+  become_method: sudo
