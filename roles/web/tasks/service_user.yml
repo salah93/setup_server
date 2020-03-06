@@ -1,9 +1,4 @@
 ---
-- name: install uwsgi python package
-  pip:
-    name: ['uwsgi']
-    virtualenv: "$HOME/.virtualenvs/uwsgi"
-    virtualenv_python: "python3.7"
 - name: add deploy key
   template:
     src: templates/deploy_key.j2

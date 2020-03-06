@@ -28,6 +28,11 @@
     name: virtualenv
     executable: "pip3.7"
   become: true
+- name: install uwsgi python package
+  pip:
+    name: ['uwsgi']
+    virtualenv: "/root/venvs/uwsgi"
+    virtualenv_python: "python3.7"
 - name: add service user
   user:
     name: "{{ appname }}"

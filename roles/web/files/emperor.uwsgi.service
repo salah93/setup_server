@@ -3,7 +3,7 @@ Description=uWSGI Emperor
 After=syslog.target
 
 [Service]
-ExecStart=/opt/venvs/uwsgi/bin/uwsgi --ini /etc/uwsgi/emperor.uwsgi.ini
+ExecStart=/root/venvs/uwsgi/bin/uwsgi --ini /etc/uwsgi/emperor.uwsgi.ini
 RuntimeDirectory=uwsgi
 Restart=always
 KillSignal=SIGQUIT

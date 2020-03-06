@@ -1,10 +1,24 @@
 ---
+- name: create uwsgi directory
+  file:
+    state: directory
+    path: /etc/uwsgi/vassals
+    mode: 0770
+    owner: root
+    group: root
+- name: add Emperor uwsgi ini file
+  copy:
+    src: files/emperor.uwsgi.ini
+    dest: /etc/uwsgi/emperor.uwsgi.ini
+    mode: 0644
+    owner: root
+    group: root
 - name: touch log file
   file:
     state: touch
     path: /var/log/emperor.log
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
+    owner: root
+    group: root
     mode: 0640
 - name: touch log file
   file:
@@ -13,26 +27,6 @@
     owner: "{{ appname }}"
     group: "{{ appname }}"
     mode: 0640
-- name: create uwsgi directory
-  file:
-    state: directory
-    path: /etc/uwsgi/vassals
-    mode: 0770
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
-  become: true
-  become_user: root
-  become_method: sudo
-- name: add Emperor uwsgi ini file
-  template:
-    src: templates/emperor.uwsgi.ini.j2
-    dest: /etc/uwsgi/emperor.uwsgi.ini
-    mode: 0644
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
-  become: true
-  become_user: root
-  become_method: sudo
 - name: add uwsgi vassal
   template:
     src: "templates/app.uwsgi.ini.j2"
