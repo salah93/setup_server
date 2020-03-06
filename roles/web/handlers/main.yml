@@ -25,5 +25,7 @@
 - name: delete private key
   file:
     state: absent
-    path: "/root/.private_key"
+    path: "$HOME/.private_key"
   become: true
+  become_user: "{{ appname }}"
+  become_method: sudo

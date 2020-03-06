@@ -36,25 +36,6 @@
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
-- name: add private key file
-  template:
-    src: templates/private_key.j2
-    dest: "/root/.private_key"
-    owner: root
-    group: root
-    mode: 0400
-  become: true
-- name: import private gpg key
-  command: 
-    cmd: "gpg --passphrase {{ private_gpg_key_pass }} --import $HOME/.private_key"
-  become: true
-  notify:
-    - delete private key
-- name: decrypt envrc file
-  command:
-    cmd: git-secret reveal
-    chdir: "/opt/{{ appname }}"
-  become: true
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml
