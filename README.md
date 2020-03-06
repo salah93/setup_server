@@ -7,6 +7,8 @@ sudo pip install ansible
 ```
 + on local machine put remote machines' ip addresses in `inventory` file
 + run the ansible playbook
+
 ```bash
-ansible-playbook -i ./inventory playbook.yml
+git secret reveal
+ansible-playbook -i ./inventory --vault-password-file ./.ansible-secret playbook.yml
 ```
