@@ -16,13 +16,13 @@
 - name: install app requirement packages
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
-    virtualenv: "$HOME/.virtualenvs/{{ appname }}"
+    virtualenv: "$HOME/{{ appname }}/env"
     virtualenv_python: "python3.7"
 - name: install app requirement packages
   pip:
     name: "$HOME/{{ appname }}"
     editable: "yes"
-    virtualenv: "$HOME/.virtualenvs/{{ appname }}"
+    virtualenv: "$HOME/{{ appname }}/env"
     virtualenv_python: "python3.7"
 - name: link files to /opt
   file:
@@ -35,8 +35,6 @@
   with_items:
     - {"src": "/home/{{ appname }}/{{ appname }}",
        "dest": "/opt/{{ appname }}"}
-    - {"src": "/home/{{ appname }}/.virtualenvs",
-       "dest": "/opt/venvs"}
   become: true
   become_user: root
   become_method: sudo
