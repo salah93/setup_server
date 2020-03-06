@@ -4,23 +4,25 @@
 # [+] 4. create virtualenv with uwsgi installed ln to  /opt/venvs/uwsgi
 # [+] 5. clone webapp ln to /opt/{name_of_app}
 # [+] 6. create virtualenv with webapp installed ln to  /opt/venvs/{name_of_app}
-#       install git-secret
-#       import private gpg key
-#       reveal private secrets
+# [+]   install git-secret
+# [+]   import private gpg key
+# [+]   reveal private secrets
 # [+] 7. decrypt secrets
 # [+] 8. add emperor uwsgi ini files to /etc/uwsgi/emperor.ini
 # [+] 9. add appropriate vassal to /etc/uwsgi/vassals
 # [+] 10. add systemd service file to /etc/systemd/system/emperor.uwsgi.service
-# [+] 11. add systemd socket file to /etc/systemd/system/emperor.uwsgi.socket
-# [+] 12. enable socket - sudo systemctl enable emperor.uwsgi.socket
+# [+] 12. enable service - sudo systemctl enable emperor.uwsgi.service
 # [+] 13. add nginx conf
 # [+] 14. reload nginx
 # [+] 15. open http ssl ports
 #     16. app logs need logrotate enabled
 #     17. add logrotate.conf to > /etc/logrotate.d/
+# [+]   touch log file with permissions
 ---
 - import_tasks: git_secret.yml
   become: true
+  notify:
+    - clean git secret
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
@@ -36,6 +38,7 @@
   become_method: sudo
   notify:
     - delete deploy key
+    - delete private key
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml

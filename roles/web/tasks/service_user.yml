@@ -55,8 +55,6 @@
 - name: import private gpg key
   command:
     cmd: "gpg  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import $HOME/.private_key"
-  notify:
-    - delete private key
 - name: decrypt envrc file
   command:
     cmd: "git-secret reveal -p {{ private_gpg_key_pass }}"
