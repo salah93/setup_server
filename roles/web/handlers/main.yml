@@ -15,3 +15,15 @@
   service:
     name: nginx
     state: restarted
+- name: delete deploy key
+  file:
+    state: absent
+    path: "$HOME/.deploy_key"
+  become: true
+  become_user: "{{ appname }}"
+  become_method: sudo
+- name: delete private key
+  file:
+    state: absent
+    path: "/root/.private_key"
+  become: true
