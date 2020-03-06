@@ -1,0 +1,37 @@
+[uwsgi]
+vaccum = true
+log-reopen = true
+thunder-lock = true
+
+#
+# wsgi config
+#
+#http-socket = 127.0.0.1:5000
+master = true
+processes = 4
+enable-threads = true
+
+#
+# Logging configuration
+#
+logto = /var/log/{{ appname }}.log
+disable-logging = true
+
+#
+# Python configuration
+#
+virtualenv = /opt/venvs/{{ appname }}
+
+#
+# application configuration
+#
+module = {{ appname }}
+callable = app
+
+
+#
+# Environment
+#
+for-readline = /opt/{{ appname }}/{{ web_env }}.envrc
+    env = %(_)
+end-for =

@@ -1,0 +1,10 @@
+server {
+  server_tokens off;
+  listen 80;
+  server_name 167.172.147.130;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass unix:/opt/{{ appname }}.sock;
+  }
+}
