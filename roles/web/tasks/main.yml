@@ -29,8 +29,6 @@
 - name: add service user
   user:
     name: "{{ appname }}"
-    groups:
-      - nginx
   become: true
 - import_tasks: service_user.yml
   become: true

@@ -43,13 +43,13 @@
   become: true
   become_user: root
   become_method: sudo
-- name: create uwsgi directory
+- name: create uwsgi sockets directory
   file:
     state: directory
-    path: /opt/sockets
-    mode: 0770
+    path: "/run/{{ appname }}"
+    mode: 0750
     owner: "{{ appname }}"
-    group: nginx
+    group: "{{ appname }}"
   become: true
   become_user: root
   become_method: sudo

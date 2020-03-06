@@ -6,7 +6,7 @@ thunder-lock = true
 #
 # socket config
 #
-socket = /opt/sockets/{{ appname }}.sock
+socket = /run/{{ appname }}/{{ appname }}.sock
 chmod-socket=770
 uid = {{ appname }}
 gid = nginx
