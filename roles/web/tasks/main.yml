@@ -33,6 +33,7 @@
     name: ['uwsgi']
     virtualenv: "/root/venvs/uwsgi"
     virtualenv_python: "python3.7"
+    version: "2.0.18"
 - name: add service user
   user:
     name: "{{ appname }}"
