@@ -33,3 +33,8 @@
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
+- name: clean git secret
+  file:
+    state: absent
+    path: /root/git-secret
+  become: true
