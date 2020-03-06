@@ -24,7 +24,7 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
-    executable: "pip3.6"
+    executable: "pip3.7"
   become: true
 - name: add service user
   user:

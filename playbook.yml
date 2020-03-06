@@ -38,9 +38,12 @@
     - user
 - name: set up web app
   hosts: web
+  vars_files:
+    - vars/web_vault.yml
   vars:
     appname: salahs_website
-    private_gpg_key: {{ vault_private_gpg_key }}
+    private_gpg_key: "{{ vault_private_gpg_key }}"
+    private_deploy_key: "{{ vault_private_deploy_key }}"
     app_repo_link: https://github.com/salah93/website
   roles:
     - root

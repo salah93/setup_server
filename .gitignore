@@ -5,3 +5,4 @@ terraform.tfvars
 terraform.tfstate.backup
 env/
 __pycache__
+.ansible.secret

@@ -3,8 +3,8 @@
   pip:
     name: ['uwsgi']
     virtualenv: "$HOME/.virtualenvs/uwsgi"
-    virtualenv_python: "python3.6"
-    executable: "pip3.6"
+    virtualenv_python: "python3.7"
+    executable: "pip3.7"
 - name: clone app
   git:
     accept_hostkey: yes
@@ -15,15 +15,15 @@
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
     virtualenv: "$HOME/.virtualenvs/{{ appname }}"
-    virtualenv_python: "python3.6"
-    executable: "pip3.6"
+    virtualenv_python: "python3.7"
+    executable: "pip3.7"
 - name: install app requirement packages
   pip:
     name: "$HOME/{{ appname }}"
     editable: "yes"
     virtualenv: "$HOME/.virtualenvs/{{ appname }}"
-    virtualenv_python: "python3.6"
-    executable: "pip3.6"
+    virtualenv_python: "python3.7"
+    executable: "pip3.7"
 - name: link files to /opt
   file:
     force: yes
