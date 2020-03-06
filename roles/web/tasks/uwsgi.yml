@@ -34,9 +34,6 @@
     mode: 0644
     owner: "{{ appname }}"
     group: "{{ appname }}"
-  become: true
-  become_user: root
-  become_method: sudo
 - name: create uwsgi sockets directory
   file:
     state: directory
