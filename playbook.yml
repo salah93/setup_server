@@ -36,3 +36,14 @@
   roles:
     - root
     - user
+- name: set up web app
+  hosts: web
+  vars:
+    appname: salahs_website
+    private_gpg_key: {{ vault_private_gpg_key }}
+    app_repo_link: https://github.com/salah93/website
+  roles:
+    - root
+    - user
+    - security
+    - web
