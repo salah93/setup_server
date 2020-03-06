@@ -29,13 +29,15 @@
 - name: add service user
   user:
     name: "{{ appname }}"
+    groups:
+      - nginx
   become: true
-  notify:
-    - delete deploy key
 - import_tasks: service_user.yml
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
+  notify:
+    - delete deploy key
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml

@@ -1,4 +1,0 @@
-nginx.conf.j2
-app.conf.j2
-emperor.uwsgi.ini.j2
-app.uwsgi.ini.j2

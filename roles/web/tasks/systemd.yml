@@ -1,11 +1,12 @@
 ---
 - name: add systemd service
-  template:
-    src: templates/emperor.uwsgi.service.j2
+  copy:
+    src: files/emperor.uwsgi.service
     dest: /etc/systemd/system/emperor.uwsgi.service
     owner: root
     group: root
     mode: 0644
+  become: true
 - name: add systemd socket
   template:
     src: templates/emperor.uwsgi.socket.j2

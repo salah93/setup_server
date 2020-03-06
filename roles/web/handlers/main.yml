@@ -2,19 +2,23 @@
 - name: enable nginx
   service:
     name: nginx
-    state: enabled
+    state: restarted
+  become: true
 - name: restart nginx
   service:
     name: nginx
     state: restarted
+  become: true
 - name: enable emperor uwsgi
   service:
     name: emperor.uwsgi.socket
-    state: enabled
+    state: restarted
+  become: true
 - name: restart emperor uwsgi
   service:
     name: nginx
     state: restarted
+  become: true
 - name: delete deploy key
   file:
     state: absent
