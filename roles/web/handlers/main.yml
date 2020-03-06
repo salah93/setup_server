@@ -1,0 +1,17 @@
+---
+- name: enable nginx
+  service:
+    name: nginx
+    state: enabled
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+- name: enable emperor uwsgi
+  service:
+    name: emperor.uwsgi.socket
+    state: enabled
+- name: restart emperor uwsgi
+  service:
+    name: nginx
+    state: restarted
