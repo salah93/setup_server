@@ -5,7 +5,6 @@
       - nginx
   tags:
     - install
-  become: true
 - name: add main nginx confg
   template:
     src: templates/nginx.conf.j2

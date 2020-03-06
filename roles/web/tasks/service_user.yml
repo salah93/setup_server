@@ -4,26 +4,31 @@
     name: ['uwsgi']
     virtualenv: "$HOME/.virtualenvs/uwsgi"
     virtualenv_python: "python3.7"
-    executable: "pip3.7"
+- name: add deploy key
+  template:
+    src: templates/deploy_key.j2
+    dest: "$HOME/.deploy_key"
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
+    mode: 0400
 - name: clone app
   git:
     accept_hostkey: yes
     dest: "$HOME/{{ appname }}"
     repo: "{{ app_repo_link }}"
     version: master
+    key_file: "$HOME/.deploy_key"
 - name: install app requirement packages
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
     virtualenv: "$HOME/.virtualenvs/{{ appname }}"
     virtualenv_python: "python3.7"
-    executable: "pip3.7"
 - name: install app requirement packages
   pip:
     name: "$HOME/{{ appname }}"
     editable: "yes"
     virtualenv: "$HOME/.virtualenvs/{{ appname }}"
     virtualenv_python: "python3.7"
-    executable: "pip3.7"
 - name: link files to /opt
   file:
     force: yes
