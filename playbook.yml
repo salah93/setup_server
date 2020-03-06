@@ -44,7 +44,7 @@
     appname: salahs_website
     private_gpg_key: "{{ vault_private_gpg_key }}"
     private_deploy_key: "{{ vault_private_deploy_key }}"
-    app_repo_link: https://github.com/salah93/website
+    app_repo_link: git@github.com:salah93/website
   roles:
     - root
     - user
