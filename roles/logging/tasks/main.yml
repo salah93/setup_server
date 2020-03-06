@@ -1,0 +1,90 @@
+---
+- name: update yum
+  yum:
+    name: *
+    state: latest
+  become: true
+- name: install rsyslog
+  yum:
+    name: rsyslog
+    state: latest
+  become: true
+- name: Open port 514/udp
+  firewalld:
+    rich_rule: rule family="ipv4" source address="'{{ item }}'/32" port protocol="udp" port="514" accept
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - "{{ groups['web'] }}"
+  become: true
+- name: Open port 514/tcp
+  firewalld:
+    rich_rule: rule family="ipv4" source address="'{{ item }}'/32" port protocol="tcp" port="514" accept
+    zone: public
+    permanent: yes
+    immediate: yes
+    state: enabled
+  with_items:
+    - "{{ groups['web'] }}"
+  become: true
+- name: update rsys config
+  copy:
+    src: files/rsyslog.conf
+    dest: /etc/rsyslog.conf
+  notify:
+    - enable rsyslog
+  become: true
+- name: add logrotation for nginx access
+  copy:
+    content: |
+      /var/log/nginx/access.log {
+          size 10M
+          copytruncate
+          notifempty
+          missingok
+          rotate 10
+          compress
+      }
+      dest: /etc/logrotate.d/nginx-access
+  become: true
+- name: add logrotation for nginx error
+  copy:
+    content: |
+      /var/log/nginx/error.log {
+          size 10M
+          copytruncate
+          notifempty
+          missingok
+          rotate 10
+          compress
+      }
+    dest: /etc/logrotate.d/nginx-error
+  become: true
+- name: add logrotation for uwsgi emperor
+  copy:
+    content: |
+      /var/log/emperor.log {
+          size 10M
+          copytruncate
+          notifempty
+          missingok
+          rotate 10
+          compress
+      }
+      dest: /etc/logrotate.d/emperor
+  become: true
+- name: add logrotation for app
+  copy:
+    content: |
+      /var/log/app.log {
+          size 10M
+          copytruncate
+          notifempty
+          missingok
+          rotate 10
+          compress
+      }
+    dest: /etc/logrotate.d/app
+  become: true
