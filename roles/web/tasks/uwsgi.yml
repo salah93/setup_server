@@ -42,8 +42,5 @@
     state: directory
     path: "/run/{{ appname }}"
     mode: 0750
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
-  become: true
-  become_user: root
-  become_method: sudo
+    owner: "nginx-{{ appname }}"
+    group: "nginx-{{ appname }}"

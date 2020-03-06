@@ -23,4 +23,4 @@
   user:
     name: nginx
     groups:
-      - "{{ appname }}"
+      - "nginx-{{ appname }}"

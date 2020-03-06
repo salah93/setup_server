@@ -9,7 +9,7 @@ thunder-lock = true
 socket = /run/{{ appname }}/{{ appname }}.sock
 chmod-socket=770
 uid = {{ appname }}
-gid = nginx
+gid = nginx-{{ appname }}
 
 #
 # wsgi config
