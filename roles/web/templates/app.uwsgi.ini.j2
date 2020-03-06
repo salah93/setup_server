@@ -4,9 +4,16 @@ log-reopen = true
 thunder-lock = true
 
 #
+# socket config
+#
+socket = /opt/sockets/{{ appname }}.sock
+chmod-socket=770
+uid = {{ appname }}
+gid = nginx
+
+#
 # wsgi config
 #
-#http-socket = 127.0.0.1:5000
 master = true
 processes = 4
 enable-threads = true

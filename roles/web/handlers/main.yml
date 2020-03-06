@@ -11,7 +11,7 @@
   become: true
 - name: enable emperor uwsgi
   service:
-    name: emperor.uwsgi.socket
+    name: emperor.uwsgi.service
     state: restarted
   become: true
 - name: restart emperor uwsgi

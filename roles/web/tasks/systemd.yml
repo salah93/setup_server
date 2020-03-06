@@ -7,13 +7,6 @@
     group: root
     mode: 0644
   become: true
-- name: add systemd socket
-  template:
-    src: templates/emperor.uwsgi.socket.j2
-    dest: /etc/systemd/system/emperor.uwsgi.socket
-    owner: root
-    group: root
-    mode: 0644
   notify:
     - enable emperor uwsgi
     - enable nginx
