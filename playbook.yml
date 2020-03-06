@@ -41,6 +41,7 @@
   vars_files:
     - vars/web_vault.yml
   vars:
+    web_env: prod
     appname: salahs_website
     private_gpg_key: "{{ vault_private_gpg_key }}"
     private_gpg_key_pass: "{{ vault_private_gpg_key_pass }}"
