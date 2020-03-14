@@ -1,0 +1,56 @@
+{
+	"variables": {
+      "do_token": "{{env `DO_TOKEN`}}",
+      "base_image": "fedora-27-x64",
+      "hostname": "salahahmed.me",
+      "build_env": "dev",
+      "service": "website",
+      "snapshot_name": "{{user `service`}}-{{user `build_env`}}-{{timestamp}}"
+  },
+  "builders": [
+    {
+      "type": "digitalocean",
+      "api_token": "{{user `do_token`}}",
+      "image": "{{user `base_image`}}",
+      "region": "nyc1",
+      "size": "s-2vcpu-4gb",
+      "ssh_username": "root",
+      "droplet_name": "{{user `hostname`}}",
+      "snapshot_name": "{{user `snapshot_name`}}",
+      "private_networking": false,
+      "ipv6": false,
+      "monitoring": false,
+      "tags": [
+          "{{user `snapshot_name`}}",
+          "{{user `service`}}",
+          "{{user `build_env`}}"
+      ],
+      "snapshot_regions": [
+        "nyc1"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "../playbook.yml",
+      "groups": [
+        "sandbox"
+      ],
+      "extra_arguments": [
+        "--vault-password-file ../.ansible-secret"
+      ]
+    }
+
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "packer-manifest.json",
+      "strip_path": true,
+      "custom_data": {
+        "build_env": "dev"
+      }
+    }
+  ]
+}
