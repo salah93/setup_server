@@ -1,6 +1,6 @@
 ---
 - name: install build dependencies
-  yum:
+  package:
     name:
       - clang
       - g++

@@ -1,45 +1,45 @@
 ---
 - name: install system packages
-  package: name={{ item }} state=present
-  with_items:
-    - ctags
-    - jq
-    - direnv
-    - make
-    - automake
-    - gcc
-    - gcc-c++
-    - kernel-devel
-    - git
-    - libselinux-python
-    - nginx
-    - python3-devel
-    - redhat-rpm-config
-    - tmux
-    - bzip2
-    - bzip2-devel
-    - wget
-    - zlib-devel
-    - gzip
+  package:
+    state: latest
+    name:
+      - ctags
+      - jq
+      - direnv
+      - make
+      - automake
+      - gcc
+      - gcc-c++
+      - kernel-devel
+      - git
+      - libselinux-python
+      - nginx
+      - python3-devel
+      - redhat-rpm-config
+      - tmux
+      - bzip2
+      - bzip2-devel
+      - wget
+      - zlib-devel
+      - gzip
   when: ansible_distribution == 'Fedora'
 - name: install system packages
-  apt: 
-      name: "{{ item }}"
-      state: present 
+  package:
+      name:
+        - build-essential
+        - jq
+        - ctags
+        - direnv
+        - git
+        - libreadline-dev
+        - libsqlite3-dev
+        - nginx
+        - python-dev
+        - python3-dev
+        - cmake
+        - tmux
+      state: latest
       update_cache: yes
-  with_items:
-    - build-essential
-    - jq
-    - ctags
-    - direnv
-    - git
-    - libreadline-dev
-    - libsqlite3-dev
-    - nginx
-    - python-dev
-    - python3-dev
-    - cmake
-    - tmux
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 - name: put selinux in permissive mode
   selinux: policy=targeted state=permissive
