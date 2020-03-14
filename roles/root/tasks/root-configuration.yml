@@ -1,7 +1,4 @@
 ---
-- name: put selinux in permissive mode
-  selinux: policy=targeted state=permissive
-  when: ansible_distribution == 'Fedora'
 - name: install system packages
   package: name={{ item }} state=present
   with_items:
@@ -10,6 +7,7 @@
     - direnv
     - gcc
     - git
+    - libselinux-python
     - nginx
     - python3-devel
     - redhat-rpm-config
@@ -34,6 +32,9 @@
     - cmake
     - tmux
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+- name: put selinux in permissive mode
+  selinux: policy=targeted state=permissive
+  when: ansible_distribution == 'Fedora'
 - name: Ensure wheel group present
   group:
     name: wheel
