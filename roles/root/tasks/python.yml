@@ -38,14 +38,7 @@
 
 - name: configure python src with optimizations
   command:
-    argv:
-      - ./configure
-      - --prefix=/usr/local
-      - --enable-optimizations
-      - --with-ensurepip=install
-      - --enable-loadable-sqlite-extensions
-      - --enable-shared
-      - LDFLAGS="-Wl,-rpath,/usr/local/lib"
+    cmd: ./configure --prefix=/usr/local --enable-optimizations --with-ensurepip=install --enable-loadable-sqlite-extensions --enable-shared LDFLAGS="-Wl,-rpath,/usr/local/lib"
     chdir: /usr/local/src/Python-{{ item }}
   loop: "{{ python_versions }}"
   tags: [ build ]
