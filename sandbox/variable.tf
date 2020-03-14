@@ -4,7 +4,7 @@ variable "do_token" {
 
 variable "ssh_keys" {
     description = "ssh key ids for digital ocean"
-    type        = "list"
+    type        = list
     default    = ["5407023", "11430846", "19610406"]
 }
 
