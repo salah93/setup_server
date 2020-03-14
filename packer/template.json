@@ -41,7 +41,6 @@
         "--vault-password-file=../.ansible-secret"
       ]
     }
-
   ],
   "post-processors": [
     {
@@ -49,7 +48,9 @@
       "output": "packer-manifest.json",
       "strip_path": true,
       "custom_data": {
-        "build_env": "dev"
+        "build_env": "dev",
+        "service": "{{ user `service`}}",
+        "snapshot_name": "{{user `snapshot_name`}}"
       }
     }
   ]
