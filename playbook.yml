@@ -13,6 +13,7 @@
   hosts: sandbox
   vars:
     python_versions:
+      - 3.6.2
       - 3.7.6
     username: salah
     keys: "https://github.com/salah93.keys"

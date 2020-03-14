@@ -5,13 +5,22 @@
     - ctags
     - jq
     - direnv
+    - make
+    - automake
     - gcc
+    - gcc-c++
+    - kernel-devel
     - git
     - libselinux-python
     - nginx
     - python3-devel
     - redhat-rpm-config
     - tmux
+    - bzip2
+    - bzip2-devel
+    - wget
+    - zlib-devel
+    - gzip
   when: ansible_distribution == 'Fedora'
 - name: install system packages
   apt: 

@@ -2,25 +2,19 @@
 - name: install build dependencies
   yum:
     name:
-      - bzip2
-      - bzip2-devel
-      - gcc
-      - gcc-c++
+      - clang
+      - g++
       - geos
       - geos-devel
       - gnutls-devel
-      - gzip
       - libffi-devel
       - libmemcached-devel
-      - make
       - ncurses-devel
       - openssl-devel
       - pcre-devel
       - postgresql-devel
       - readline-devel
       - sqlite-devel
-      - wget
-      - zlib-devel
   tags: [ build ]
   when: ansible_distribution == 'Fedora'
 
@@ -51,7 +45,7 @@
       - --with-ensurepip=install
       - --enable-loadable-sqlite-extensions
       - --enable-shared
-      - LDFLAGS="-Wl,-rpath /usr/local/lib"
+      - LDFLAGS="-Wl,-rpath,/usr/local/lib"
     chdir: /usr/local/src/Python-{{ item }}
   loop: "{{ python_versions }}"
   tags: [ build ]
