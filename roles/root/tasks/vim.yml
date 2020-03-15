@@ -35,6 +35,11 @@
     repo: https://github.com/vim/vim
   tags:
     - install
+
+- name: get python3 config directory
+  shell: python{{ python_versions[0] | version_minor }}-config --configdir
+  register: python3_config_dir_result
+
 - name: configure vim
   command:
     argv:
@@ -43,7 +48,7 @@
       - --enable-multibyte
       - --enable-python3interp=yes
       - "--with-python3-command=/usr/local/bin/python{{ python_versions[0] | version_minor }}"
-      - "--with-python3-config-dir=$(python{{ python_versions[0] | version_minor }}m-config --configdir)"
+      - "--with-python3-config-dir={{ python3_config_dir_result.stdout }}"
       - --enable-cscope
       - --prefix=/usr/local
     chdir: /tmp/vim
