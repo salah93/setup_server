@@ -9,6 +9,7 @@
       - make
       - automake
       - gcc
+      - cmake
       - gcc-c++
       - kernel-devel
       - git
