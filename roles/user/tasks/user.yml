@@ -52,3 +52,9 @@
        "dest": "$HOME/.tmux.conf"}
     - {"src": "$HOME/Projects/scripts",
        "dest": "$HOME/.scripts"}
+- name: Install vim plugins
+  command: vim +PluginInstall +qall
+- name: Install vim plugins
+  command:
+    cmd: python3 install.py --all
+    chdir: $HOME/.vim/bundle/YouCompleteMe
