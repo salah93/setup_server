@@ -42,6 +42,7 @@ resource "digitalocean_droplet" "sandbox" {
 }
 
 resource "digitalocean_firewall" "sandbox" {
+    depends_on = [digitalocean_droplet.sandbox]
     name = "ssh-only"
 
     tags = [
