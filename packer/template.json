@@ -14,12 +14,6 @@
       "size": "s-2vcpu-4gb",
       "ssh_username": "root",
       "snapshot_name": "{{user `snapshot_name`}}",
-      "private_networking": true,
-      "ipv6": true,
-      "monitoring": true,
-      "tags": [
-          "{{user `service`}}"
-      ],
       "snapshot_regions": [
         "nyc1"
       ]
