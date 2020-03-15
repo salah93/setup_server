@@ -1,0 +1,8 @@
+---
+- name: configure user
+  hosts: all
+  tasks:
+    - set_fact:
+        timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
+  roles:
+    - user
