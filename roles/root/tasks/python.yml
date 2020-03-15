@@ -1,5 +1,5 @@
 ---
-- name: install build dependencies
+- name: install python build dependencies
   package:
     name:
       - clang

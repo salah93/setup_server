@@ -1,8 +1,7 @@
 ---
 ansible_python_interpreter: /usr/bin/python3
 python_versions:
-  - 3.6.2
-  - 3.7.6
+  - 3.8.2
 username: salah
 keys: "https://github.com/salah93.keys"
 full_name: Salah Ahmed

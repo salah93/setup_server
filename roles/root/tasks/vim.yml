@@ -1,5 +1,5 @@
 ---
-- name: install build dependencies
+- name: install vim build dependencies
   package:
     name:
       - python-dev
@@ -7,7 +7,7 @@
   tags:
     - build
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-- name: install build dependencies
+- name: install vim build dependencies
   package:
     name:
       - tcl-devel
@@ -42,8 +42,8 @@
       - --with-features=huge
       - --enable-multibyte
       - --enable-python3interp=yes
-      - --with-python3-command=/usr/local/bin/python3.6
-      - --with-python3-config-dir=$(python3.6m-config --configdir)
+      - "--with-python3-command=/usr/local/bin/python{{ python_versions[0] | version_minor }}"
+      - "--with-python3-config-dir=$(python{{ python_versions[0] | version_minor }}m-config --configdir)"
       - --enable-cscope
       - --prefix=/usr/local
     chdir: /tmp/vim
