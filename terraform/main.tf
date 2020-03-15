@@ -15,15 +15,27 @@ resource "digitalocean_droplet" "sandbox" {
         "sandbox"
     ]
 
+    connection {
+        type        = "ssh"
+        private_key = file(var.private_key)
+        user        = var.remote_user
+        host        = self.ipv4_address
+        timeout     = "3m"
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "sudo rm -rf .ansible"
+        ]
+    }
+
     provisioner "local-exec" {
         command = <<EOT
-            ansible-playbook -u $REMOTE_USER --private-key=$PRIVATE_KEY -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
+            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
             EOT
         working_dir = ".."
         environment = {
             PLAYBOOK = "user-playbook.yml"
-            REMOTE_USER = "salah"
-            PRIVATE_KEY = "~/.ssh/id_rsa"
         }
     }
 

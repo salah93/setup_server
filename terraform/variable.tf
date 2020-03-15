@@ -13,6 +13,11 @@ variable "private_key" {
   default     = "~/.ssh/id_rsa"
 }
 
+variable "remote_user" {
+  description = "remote user"
+  default     = "salah"
+}
+
 variable "image" {
   description = "Image to use"
   default     = "fedora-27-x64"
