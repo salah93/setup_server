@@ -3,7 +3,7 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "sandbox" {
-    name               = "sandbox"
+    name               = "sandbox-01"
     image              = var.image
     region             = var.region
     size               = var.size
@@ -14,9 +14,22 @@ resource "digitalocean_droplet" "sandbox" {
     tags = [
         "sandbox"
     ]
+
+    provisioner "local-exec" {
+        command = <<EOT
+            ansible-playbook -u $REMOTE_USER --private-key=$PRIVATE_KEY -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
+            EOT
+        working_dir = ".."
+        environment = {
+            PLAYBOOK = "user-playbook.yml"
+            REMOTE_USER = "salah"
+            PRIVATE_KEY = "~/.ssh/id_rsa"
+        }
+    }
+
 }
 
-resource "digitalocean_firewall" "ssh" {
+resource "digitalocean_firewall" "sandbox" {
     name = "ssh-only"
 
     tags = [

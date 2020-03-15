@@ -27,6 +27,7 @@
         "{{user `service`}}"
       ],
       "extra_arguments": [
+        "--skip-tags='user'",
         "--vault-password-file=../.ansible-secret"
       ]
     }

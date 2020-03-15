@@ -1,8 +1,10 @@
 ---
 - name: add directories
   file:
-    path: "/home/{{ username }}/{{ item }}"
+    path: "$HOME/{{ item }}"
     state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
     mode: 0755
   with_items:
     - "Experiments"
@@ -26,25 +28,27 @@
     repo: "https://github.com/{{ item.repo }}"
   with_items:
     - {"repo": "VundleVim/Vundle.vim",
-       "dest": "/home/{{ username }}/.vim/bundle/Vundle.vim"}
+       "dest": "$HOME/.vim/bundle/Vundle.vim"}
     - {"repo": "salah93/dotfiles",
-       "dest": "/home/{{ username }}/Projects/dotfiles"}
+       "dest": "$HOME/Projects/dotfiles"}
     - {"repo": "salah93/cltools",
-       "dest": "/home/{{ username }}/Projects/scripts"}
+       "dest": "$HOME/Projects/scripts"}
 - name: link rc files
   file:
     force: yes
     path: "{{ item.dest }}"
     state: link
     src: "{{ item.src}}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
   with_items:
-    - {"src": "/home/{{ username }}/Projects/dotfiles/bashrc",
-       "dest": "/home/{{ username }}/.bashrc"}
-    - {"src": "/home/{{ username }}/Projects/dotfiles/bash_profile",
-       "dest": "/home/{{ username }}/.bash_profile"}
-    - {"src": "/home/{{ username }}/Projects/dotfiles/vimrc",
-       "dest": "/home/{{ username }}/.vimrc"}
-    - {"src": "/home/{{ username }}/Projects/dotfiles/tmux.conf",
-       "dest": "/home/{{ username }}/.tmux.conf"}
-    - {"src": "/home/{{ username }}/Projects/scripts",
-       "dest": "/home/{{ username }}/.scripts"}
+    - {"src": "$HOME/Projects/dotfiles/bashrc",
+       "dest": "$HOME/.bashrc"}
+    - {"src": "$HOME/Projects/dotfiles/bash_profile",
+       "dest": "$HOME/.bash_profile"}
+    - {"src": "$HOME/Projects/dotfiles/vimrc",
+       "dest": "$HOME/.vimrc"}
+    - {"src": "$HOME/Projects/dotfiles/tmux.conf",
+       "dest": "$HOME/.tmux.conf"}
+    - {"src": "$HOME/Projects/scripts",
+       "dest": "$HOME/.scripts"}

@@ -2,8 +2,6 @@
 - name: bootstrap ansible
   hosts: all
   gather_facts: no
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: update dnf
       dnf:
@@ -13,37 +11,21 @@
       dnf:
         name:
           - python-dnf
-- name: configure servers
+- name: configure sandbox
   hosts: sandbox
-  vars:
-    python_versions:
-      - 3.6.2
-      - 3.7.6
-    username: salah
-    keys: "https://github.com/salah93.keys"
-    full_name: Salah Ahmed
-    email: salahs.email@pm.me
-  tasks:
-    - set_fact:
-        timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
   roles:
     - root
-    - user
     - security
+    - user
 - name: set up kafka
   hosts: kafka
-  vars:
-    kafka_url: "http://apache-mirror.8birdsvideo.com/kafka/2.4.0/kafka_2.12-2.4.0.tgz"
   roles:
     - root
-    - user
     - security
+    - user
     - kafka
 - name: set up vagrant
   hosts: vagrant
-  vars:
-    username: vagrant
-    email: sahmed@resy.com
   roles:
     - root
     - user
@@ -51,15 +33,8 @@
   hosts: web
   vars_files:
     - vars/web_vault.yml
-  vars:
-    web_env: prod
-    appname: salahs_website
-    private_gpg_key: "{{ vault_private_gpg_key }}"
-    private_gpg_key_pass: "{{ vault_private_gpg_key_pass }}"
-    private_deploy_key: "{{ vault_private_deploy_key }}"
-    app_repo_link: git@github.com:salah93/website
   roles:
     - root
-    - user
     - security
+    - user
     - web
