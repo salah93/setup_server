@@ -17,27 +17,29 @@ resource "digitalocean_droplet" "sandbox" {
 }
 
 resource "digitalocean_firewall" "ssh" {
-  name = "ssh-only"
+    name = "ssh-only"
 
-  tags = ["sandbox"]
+    tags = [
+        "sandbox"
+    ]
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "22"
-    source_addresses = ["0.0.0.0/0", "::/0"]
-  }
+    inbound_rule {
+        protocol         = "tcp"
+        port_range       = "22"
+        source_addresses = ["0.0.0.0/0", "::/0"]
+    }
 
-  outbound_rule {
-    protocol              = "tcp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
+    outbound_rule {
+        protocol              = "tcp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
 
-  outbound_rule {
-    protocol              = "udp"
-    port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0", "::/0"]
-  }
+    outbound_rule {
+        protocol              = "udp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
 }
 
 output "sandbox-ip" {
