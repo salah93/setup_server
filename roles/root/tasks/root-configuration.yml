@@ -55,7 +55,7 @@
     regexp: "^%wheel"
     line: "%wheel ALL=(ALL) NOPASSWD:ALL"
     validate: "/usr/sbin/visudo -cf %s"
-- name: add privelaged user
+- name: add privileged user
   user:
     name: "{{ username }}"
     groups:
