@@ -3,7 +3,6 @@
   package:
     name:
       - clang
-      - g++
       - geos
       - geos-devel
       - gnutls-devel
@@ -99,6 +98,6 @@
       - virtualenv
       - black
       - pipx
-    executable: "/usr/local/bin/pip{{ python_version }}"
+    executable: "/usr/local/bin/pip{{ python_version | version_minor }}"
   tags:
     - pip
