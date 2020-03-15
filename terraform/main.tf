@@ -9,6 +9,7 @@ resource "digitalocean_droplet" "sandbox" {
     size               = var.size
     ipv6               = true
     monitoring         = true
+    ssh_keys           = var.ssh_keys
     private_networking = true
     tags = [
         "sandbox"
