@@ -12,7 +12,6 @@
       - gcc-c++
       - kernel-devel
       - git
-      - libselinux-python
       - nginx
       - python3-devel
       - redhat-rpm-config
@@ -41,9 +40,6 @@
       state: latest
       update_cache: yes
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-- name: put selinux in permissive mode
-  selinux: policy=targeted state=permissive
-  when: ansible_distribution == 'Fedora'
 - name: Ensure wheel group present
   group:
     name: wheel
