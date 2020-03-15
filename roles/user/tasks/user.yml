@@ -1,7 +1,7 @@
 ---
 - name: add directories
   file:
-    path: "$HOME/{{ item }}"
+    path: "/home/{{ username }}/{{ item }}"
     state: directory
     mode: 0755
   with_items:
@@ -9,21 +9,6 @@
     - "Projects"
     - ".virtualenvs"
     - ".vim/bundle"
-- name: Install virtualenv via pip
-  pip:
-    name: virtualenv
-    executable: pip3
-  become: yes
-  become_user: root
-  tags:
-    - pip
-- name: install python packages
-  pip:
-    name: ['ipython']
-    state: latest
-    virtualenv: "$HOME/.virtualenvs/env"
-  tags:
-    - pip
 - name: configure git email
   git_config:
     name: user.email
@@ -41,11 +26,11 @@
     repo: "https://github.com/{{ item.repo }}"
   with_items:
     - {"repo": "VundleVim/Vundle.vim",
-       "dest": "~/.vim/bundle/Vundle.vim"}
+       "dest": "/home/{{ username }}/.vim/bundle/Vundle.vim"}
     - {"repo": "salah93/dotfiles",
-       "dest": "~/Projects/dotfiles"}
+       "dest": "/home/{{ username }}/Projects/dotfiles"}
     - {"repo": "salah93/cltools",
-       "dest": "~/Projects/scripts"}
+       "dest": "/home/{{ username }}/Projects/scripts"}
 - name: link rc files
   file:
     force: yes
@@ -53,13 +38,13 @@
     state: link
     src: "{{ item.src}}"
   with_items:
-    - {"src": "~/Projects/dotfiles/bashrc",
-       "dest": "~/.bashrc"}
-    - {"src": "~/Projects/dotfiles/bash_profile",
-       "dest": "~/.bash_profile"}
-    - {"src": "~/Projects/dotfiles/vimrc",
-       "dest": "~/.vimrc"}
-    - {"src": "~/Projects/dotfiles/tmux.conf",
-       "dest": "~/.tmux.conf"}
-    - {"src": "~/Projects/scripts",
-       "dest": "~/.scripts"}
+    - {"src": "/home/{{ username }}/Projects/dotfiles/bashrc",
+       "dest": "/home/{{ username }}/.bashrc"}
+    - {"src": "/home/{{ username }}/Projects/dotfiles/bash_profile",
+       "dest": "/home/{{ username }}/.bash_profile"}
+    - {"src": "/home/{{ username }}/Projects/dotfiles/vimrc",
+       "dest": "/home/{{ username }}/.vimrc"}
+    - {"src": "/home/{{ username }}/Projects/dotfiles/tmux.conf",
+       "dest": "/home/{{ username }}/.tmux.conf"}
+    - {"src": "/home/{{ username }}/Projects/scripts",
+       "dest": "/home/{{ username }}/.scripts"}
