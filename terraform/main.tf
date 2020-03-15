@@ -5,7 +5,7 @@ provider "digitalocean" {
 resource "digitalocean_droplet" "sandbox" {
     name               = "sandbox"
     image              = var.image
-    region             = var.data_center
+    region             = var.region
     size               = var.size
     ipv6               = true
     monitoring         = true
