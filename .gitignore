@@ -8,3 +8,4 @@ __pycache__
 .gitsecret/keys/random_seed
 !*.secret
 .ansible-secret
+.packer-manifest.json
