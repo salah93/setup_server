@@ -1,0 +1,10 @@
+---
+- name: set up web app
+  hosts: all
+  vars_files:
+    - vars/web_vault.yml
+  tasks:
+    - set_fact:
+        timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
+  roles:
+    - web
