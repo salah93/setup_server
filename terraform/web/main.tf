@@ -46,7 +46,7 @@ resource "digitalocean_droplet" "website" {
         command = <<EOT
             ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i ${self.ipv4_address}, --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
             EOT
-        working_dir = ".."
+        working_dir = "../../"
         environment = {
             PLAYBOOK = "web-playbook.yml"
         }
