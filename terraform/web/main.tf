@@ -2,22 +2,16 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
-data "digitalocean_images" "website" {
-  sort {
-    key = "name"
-    direction = "desc"
-  }
-
-  filter {
-    key   = "regions"
-    values = [var.region]
-  }
+data "digitalocean_droplet_snapshot" "website" {
+    name_regex  = "sandbox-\\d*"
+    region      = var.region
+    most_recent = true
 }
 
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
     name               = format("website-%s", count.index + 1)
-    image              = data.digitalocean_images.website.images[0].id
+    image              = data.digitalocean_droplet_snapshot.website.id
     region             = var.region
     size               = var.size
     ipv6               = true
