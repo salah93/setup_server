@@ -19,10 +19,13 @@
 #     17. add logrotate.conf to > /etc/logrotate.d/
 # [+]   touch log file with permissions
 ---
+- name: install rsyslog
+  package:
+    state: latest
+    name: rsyslog
+  become: true
 - import_tasks: git_secret.yml
   become: true
-  notify:
-    - clean git secret
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
@@ -47,22 +50,16 @@
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
-  notify:
-    - delete deploy key
-    - delete private key
-- name: install rsyslog
-  package:
-    state: latest
-    name: rsyslog
-  become: true
-  notify:
-    - load rsyslog
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml
   become: true
-- import_tasks: systemd.yml
+- include_tasks: systemd.yml
   become: true
   notify:
+    - clean git secret
+    - delete deploy key
+    - delete private key
+    - load rsyslog
     - load uwsgi
     - load nginx
