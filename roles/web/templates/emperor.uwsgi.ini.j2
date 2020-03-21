@@ -2,4 +2,4 @@
 emperor = /etc/uwsgi/vassals
 emperor-nofollow = 1
 #logto = /var/log/emperor.log
-logger = rsyslog:{{ logserver }}:514,local2
+logger = rsyslog:{{ logserver }}:514,emperor,150
