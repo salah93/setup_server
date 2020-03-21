@@ -17,13 +17,13 @@
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
     virtualenv: "$HOME/{{ appname }}/env"
-    virtualenv_python: "python3.7"
+    virtualenv_python: "python3.8"
 - name: install app requirement packages
   pip:
     name: "$HOME/{{ appname }}"
     editable: "yes"
     virtualenv: "$HOME/{{ appname }}/env"
-    virtualenv_python: "python3.7"
+    virtualenv_python: "python3.8"
 - name: link files to /opt
   file:
     force: yes

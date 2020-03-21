@@ -26,13 +26,13 @@
 - name: Install virtualenv via pip
   pip:
     name: virtualenv
-    executable: "pip3.7"
+    executable: "pip3.8"
   become: true
 - name: install uwsgi python package
   pip:
     name: ['uwsgi']
     virtualenv: "/root/venvs/uwsgi"
-    virtualenv_python: "python3.7"
+    virtualenv_python: "python3.8"
     version: "2.0.18"
 - name: add service user
   user:
