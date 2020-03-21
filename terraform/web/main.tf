@@ -2,19 +2,22 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
-data "digitalocean_image" "website" {
-  filter {
-    name   = "tag"
-    values = ["website"]
+data "digitalocean_images" "website" {
+  sort {
+    key = "name"
+    direction = "desc"
   }
 
-  most_recent = true
+  filter {
+    key   = "regions"
+    values = [var.region]
+  }
 }
 
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
     name               = "website"
-    image              = digitalocean_image.website.id
+    image              = data.digitalocean_images.website.images[0].id
     region             = var.region
     size               = var.size
     ipv6               = true

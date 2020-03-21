@@ -2,19 +2,22 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
-data "digitalocean_image" "sandbox" {
-  filter {
-    name   = "tag"
-    values = ["sandbox"]
+data "digitalocean_images" "sandbox" {
+  sort {
+    key = "name"
+    direction = "desc"
   }
 
-  most_recent = true
+  filter {
+    key   = "regions"
+    values = [var.region]
+  }
 }
 
 resource "digitalocean_droplet" "sandbox" {
     name               = format("sandbox-%s", count.index + 1)
     count              = var.node_count
-    image              = digitalocean_image.sandbox.id
+    image              = data.digitalocean_images.sandbox.images[0].id
     region             = var.region
     size               = var.size
     ipv6               = true
