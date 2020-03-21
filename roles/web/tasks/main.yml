@@ -2,8 +2,12 @@
 - name: install rsyslog
   package:
     state: latest
-    name: rsyslog
+    name:
+      - rsyslog
+      - libselinux-python
   become: true
+- name: put selinux in permissive mode
+  selinux: policy=targeted state=permissive
 - import_tasks: git_secret.yml
   become: true
 - name: Install virtualenv via pip
