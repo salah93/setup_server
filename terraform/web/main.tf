@@ -48,18 +48,40 @@ resource "digitalocean_droplet" "website" {
 
 }
 
-resource "digitalocean_firewall" "website" {
-    depends_on = [digitalocean_droplet.website]
-    name = "ssh-only"
 
-    tags = [
-        "website"
-    ]
+resource "digitalocean_loadbalancer" "website" {
+    depends_on          = [digitalocean_droplet.website]
+    name                = "website"
+    region              = var.region
+
+    forwarding_rule {
+        entry_port      = 80
+        entry_protocol  = "http"
+
+        target_port     = 80
+        target_protocol = "http"
+    }
+
+    healthcheck {
+        port            = 80
+        protocol        = "http"
+        path            = "/health"
+    }
+
+    droplet_tag        = "website"
+}
+
+
+resource "digitalocean_firewall" "website" {
+    depends_on                = [digitalocean_droplet.website]
+    name                      = "ssh-only"
+
+    tags                      = ["website"]
 
     inbound_rule {
-        protocol         = "tcp"
-        port_range       = "22"
-        source_addresses = ["0.0.0.0/0", "::/0"]
+        protocol              = "tcp"
+        port_range            = "22"
+        source_addresses      = ["0.0.0.0/0", "::/0"]
     }
 
     outbound_rule {
