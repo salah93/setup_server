@@ -10,7 +10,10 @@
                 "nyc1"
             ],
             "ssh_username": "root",
-            "type": "digitalocean"
+            "type": "digitalocean",
+            "tags": [
+              "{{user `service`}}"
+            ]
         }
     ],
     "post-processors": [
