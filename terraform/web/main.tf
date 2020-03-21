@@ -16,7 +16,7 @@ data "digitalocean_images" "website" {
 
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
-    name               = "website"
+    name               = format("website-%s", count.index + 1)
     image              = data.digitalocean_images.website.images[0].id
     region             = var.region
     size               = var.size
@@ -44,7 +44,7 @@ resource "digitalocean_droplet" "website" {
 
     provisioner "local-exec" {
         command = <<EOT
-            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.website[count.index].ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
+            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i ${self.ipv4_address}, --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
             EOT
         working_dir = ".."
         environment = {
@@ -55,7 +55,7 @@ resource "digitalocean_droplet" "website" {
 }
 
 resource "digitalocean_firewall" "website" {
-    depends_on = [digitalocean_droplet.sandbox]
+    depends_on = [digitalocean_droplet.website]
     name = "ssh-only"
 
     tags = [
