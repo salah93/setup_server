@@ -34,10 +34,13 @@
     virtualenv: "/root/venvs/uwsgi"
     virtualenv_python: "python3.8"
     version: "2.0.18"
+- name: add service group
+  group:
+    name: "nginx-{{ appname }}"
 - name: add service user
   user:
     name: "{{ appname }}"
-    group:
+    groups:
       - "nginx-{{ appname }}"
   become: true
 - import_tasks: service_user.yml
@@ -47,16 +50,18 @@
   notify:
     - delete deploy key
     - delete private key
+- name: install rsyslog
+  package:
+    name: rsyslog
+  become: true
+  notify:
+    - load rsyslog
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml
   become: true
 - import_tasks: systemd.yml
   become: true
-- name: open http port
-  firewalld:
-    service: http
-    permanent: yes
-    immediate: yes
-    state: enabled
-  become: true
+  notify:
+    - load uwsgi
+    - load nginx

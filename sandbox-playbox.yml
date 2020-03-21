@@ -1,8 +1,12 @@
 ---
-- name: configure user
+- name: configure sandbox
   hosts: all
   tasks:
     - set_fact:
         timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
-    - user
+    # - user
+    - logging

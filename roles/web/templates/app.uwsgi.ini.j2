@@ -21,8 +21,8 @@ enable-threads = true
 #
 # Logging configuration
 #
-logto = /var/log/{{ appname }}.log
-#rsyslog:{{ logserver }}:514,local3
+#logto = /var/log/{{ appname }}.log
+logger = rsyslog:{{ logserver }}:514,local3
 disable-logging = true
 
 #

@@ -47,8 +47,10 @@
     mode: 0400
 - name: import private gpg key
   command:
-    cmd: "gpg  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import $HOME/.private_key"
+    cmd: gpg2  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import $HOME/.private_key
 - name: decrypt envrc file
   command:
-    cmd: "git-secret reveal -p {{ private_gpg_key_pass }}"
+    cmd: git-secret reveal -p {{ private_gpg_key_pass }}
     chdir: "/opt/{{ appname }}"
+  environment:
+    SECRETS_GPG_COMMAND: gpg2

@@ -3,8 +3,12 @@
   hosts: all
   vars_files:
     - vars/web_vault.yml
+    - vars/web.yml
   tasks:
     - set_fact:
         timestamp: '{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}'
+  become: true
+  become_user: root
+  become_method: sudo
   roles:
     - web

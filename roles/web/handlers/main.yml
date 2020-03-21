@@ -1,20 +1,15 @@
 ---
-- name: enable nginx
+- name: load rsyslog
   service:
-    name: nginx
+    name: rsyslog
     state: restarted
   become: true
-- name: restart nginx
-  service:
-    name: nginx
-    state: restarted
-  become: true
-- name: enable emperor uwsgi
+- name: load uwsgi
   service:
     name: emperor.uwsgi.service
     state: restarted
   become: true
-- name: restart emperor uwsgi
+- name: load nginx
   service:
     name: nginx
     state: restarted
