@@ -2,10 +2,19 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
+data "digitalocean_image" "website" {
+  filter {
+    name   = "tag"
+    values = ["website"]
+  }
+
+  most_recent = true
+}
+
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
-    name               = "sandbox-01"
-    image              = var.image
+    name               = "website"
+    image              = digitalocean_image.website.id
     region             = var.region
     size               = var.size
     ipv6               = true
@@ -32,7 +41,7 @@ resource "digitalocean_droplet" "website" {
 
     provisioner "local-exec" {
         command = <<EOT
-            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
+            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.website[count.index].ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
             EOT
         working_dir = ".."
         environment = {
@@ -67,8 +76,4 @@ resource "digitalocean_firewall" "website" {
         port_range            = "1-65535"
         destination_addresses = ["0.0.0.0/0", "::/0"]
     }
-}
-
-output "website-ips" {
-    value = digitalocean_droplet.website.ipv4_address
 }

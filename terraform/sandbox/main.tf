@@ -2,16 +2,26 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
+data "digitalocean_image" "sandbox" {
+  filter {
+    name   = "tag"
+    values = ["sandbox"]
+  }
+
+  most_recent = true
+}
+
 resource "digitalocean_droplet" "sandbox" {
-    name               = "sandbox-01"
-    image              = var.image
+    name               = format("sandbox-%s", count.index + 1)
+    count              = var.node_count
+    image              = digitalocean_image.sandbox.id
     region             = var.region
     size               = var.size
     ipv6               = true
     monitoring         = true
     ssh_keys           = var.ssh_keys
     private_networking = true
-    tags = [
+    tags               = [
         "sandbox"
     ]
 
@@ -31,7 +41,7 @@ resource "digitalocean_droplet" "sandbox" {
 
     provisioner "local-exec" {
         command = <<EOT
-            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.sandbox.ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
+            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i "${digitalocean_droplet.sandbox[count.index].ipv4_address}," --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
             EOT
         working_dir = ".."
         environment = {
@@ -66,8 +76,4 @@ resource "digitalocean_firewall" "sandbox" {
         port_range            = "1-65535"
         destination_addresses = ["0.0.0.0/0", "::/0"]
     }
-}
-
-output "sandbox-ip" {
-    value = digitalocean_droplet.sandbox.ipv4_address
 }
