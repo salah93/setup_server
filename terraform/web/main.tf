@@ -38,7 +38,13 @@ resource "digitalocean_droplet" "website" {
 
     provisioner "local-exec" {
         command = <<EOT
-            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i ${self.ipv4_address}, --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" $PLAYBOOK
+            ansible-playbook \
+                -u ${var.remote_user} \
+                --vault-password-file ./.ansible-secret \
+                --private-key=${var.private_key} \
+                -i ${self.ipv4_address}, \
+                --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
+                $PLAYBOOK
             EOT
         working_dir = "../../"
         environment = {
