@@ -52,6 +52,7 @@
     - delete private key
 - name: install rsyslog
   package:
+    state: latest
     name: rsyslog
   become: true
   notify:
