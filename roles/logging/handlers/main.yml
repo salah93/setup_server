@@ -1,6 +1,6 @@
 ---
-- name: enable rsyslog
+- name: enable syslog-ng
   service:
-    name: rsyslog
+    name: syslog-ng
     state: restarted
   become: true

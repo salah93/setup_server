@@ -25,12 +25,12 @@
         immediate: yes
         state: enabled
     - name: add syslog-ng config
-      file:
+      copy:
         src: files/syslog-ng.conf
         dest: /etc/syslog-ng/conf.d/app.conf
       notify:
-        - enable rsyslog
+        - enable syslog-ng
     - name: add logrotation for app
-      file:
+      copy:
         src: files/app-log-rotate
         dest: /etc/logrotate.d/app
