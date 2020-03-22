@@ -1,5 +1,5 @@
 #!/bin/bash
-set -o
+set -u
 
 TF_VAR_color=green TF_VAR_release=$OLD_RELEASE terraform destroy \
     --state releases/release_$OLD_RELEASE.state

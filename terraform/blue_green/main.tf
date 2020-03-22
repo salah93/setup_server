@@ -45,6 +45,7 @@ resource "digitalocean_droplet" "website" {
                 --vault-password-file ./.ansible-secret \
                 --private-key=${var.private_key} \
                 -e release=${var.release} \
+                -e logserver=${var.logserver} \
                 -i ${self.ipv4_address}, \
                 --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
                 $PLAYBOOK

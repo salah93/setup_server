@@ -1,5 +1,5 @@
 #!/bin/bash
-set -o
+set -u
 
 # new release
 TF_VAR_color=green TF_VAR_release=$NEW_RELEASE terraform apply \

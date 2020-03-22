@@ -29,6 +29,10 @@ variable "remote_user" {
   description = "remote user"
 }
 
+variable "logserver" {
+  description = "ip of centralized log server"
+}
+
 variable "release" {
   description = "release version"
 }
