@@ -13,6 +13,8 @@
     repo: "{{ app_repo_link }}"
     version: master
     key_file: "$HOME/.deploy_key"
+  notify:
+    - delete deploy key
 - name: install app requirement packages
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
@@ -54,3 +56,6 @@
     chdir: "/opt/{{ appname }}"
   environment:
     SECRETS_GPG_COMMAND: gpg2
+  notify:
+    - remove git secret repo
+    - delete private key

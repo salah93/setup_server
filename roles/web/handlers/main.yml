@@ -1,9 +1,4 @@
 ---
-- name: load rsyslog
-  service:
-    name: rsyslog
-    state: restarted
-  become: true
 - name: load uwsgi
   service:
     name: emperor.uwsgi.service
@@ -28,7 +23,7 @@
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
-- name: clean git secret
+- name: remove git secret repo
   file:
     state: absent
     path: /root/git-secret

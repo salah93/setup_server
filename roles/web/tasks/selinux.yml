@@ -1,0 +1,7 @@
+---
+- name: install selinux tools
+  package:
+    state: latest
+    name: libselinux-python
+- name: put selinux in permissive mode
+  selinux: policy=targeted state=permissive
