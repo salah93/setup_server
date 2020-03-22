@@ -14,14 +14,9 @@
     virtualenv: "/root/venvs/uwsgi"
     virtualenv_python: "python3.8"
     version: "2.0.18"
-- name: add service group
-  group:
-    name: "nginx-{{ appname }}"
 - name: add service user
   user:
     name: "{{ appname }}"
-    groups:
-      - "nginx-{{ appname }}"
   become: true
 - import_tasks: service_user.yml
   become: true

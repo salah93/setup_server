@@ -26,4 +26,4 @@
     path: "/run/{{ appname }}"
     mode: 0750
     owner: "{{ appname }}"
-    group: "nginx-{{ appname }}"
+    group: "nginx"

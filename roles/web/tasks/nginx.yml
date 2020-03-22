@@ -19,8 +19,3 @@
     owner: root
     group: root
     mode: 0644
-- name: add nginx user to app's group
-  user:
-    name: nginx
-    groups:
-      - "nginx-{{ appname }}"
