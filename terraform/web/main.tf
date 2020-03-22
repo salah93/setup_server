@@ -79,7 +79,7 @@ resource "digitalocean_loadbalancer" "website" {
 
 
 resource "digitalocean_firewall" "website" {
-    depends_on                = [digitalocean_droplet.website]
+    depends_on                = [digitalocean_loadbalancer.website]
     name                      = "ssh-only"
 
     tags                      = ["website"]
@@ -87,7 +87,14 @@ resource "digitalocean_firewall" "website" {
     inbound_rule {
         protocol              = "tcp"
         port_range            = "22"
-        source_addresses      = ["0.0.0.0/0", "::/0"]
+        source_tags           = ["sandbox"]
+    }
+
+    inbound_rule {
+        protocol              = "tcp"
+        port_range            = "80"
+        source_tags           = ["website"]
+        source_load_balancer_uids = [digitalocean_loadbalancer.website.id]
     }
 
     outbound_rule {
