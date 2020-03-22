@@ -62,6 +62,18 @@ resource "digitalocean_firewall" "sandbox" {
         source_addresses = ["0.0.0.0/0", "::/0"]
     }
 
+    inbound_rule {
+        protocol         = "tcp"
+        port_range       = "514"
+        source_tags      = ["website"]
+    }
+
+    inbound_rule {
+        protocol         = "udp"
+        port_range       = "514"
+        source_tags      = ["website"]
+    }
+
     outbound_rule {
         protocol              = "tcp"
         port_range            = "1-65535"
