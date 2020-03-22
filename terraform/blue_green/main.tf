@@ -19,7 +19,8 @@ resource "digitalocean_droplet" "website" {
     ssh_keys           = var.ssh_keys
     private_networking = true
     tags = [
-        "website"
+        "website",
+        var.color
     ]
 
     connection {
@@ -42,6 +43,7 @@ resource "digitalocean_droplet" "website" {
                 -u ${var.remote_user} \
                 --vault-password-file ./.ansible-secret \
                 --private-key=${var.private_key} \
+                -e release=${var.release} \
                 -i ${self.ipv4_address}, \
                 --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
                 $PLAYBOOK
@@ -52,60 +54,4 @@ resource "digitalocean_droplet" "website" {
         }
     }
 
-}
-
-
-resource "digitalocean_loadbalancer" "website" {
-    depends_on          = [digitalocean_droplet.website]
-    name                = "website"
-    region              = var.region
-
-    forwarding_rule {
-        entry_port      = 80
-        entry_protocol  = "http"
-
-        target_port     = 80
-        target_protocol = "http"
-    }
-
-    healthcheck {
-        port            = 80
-        protocol        = "http"
-        path            = "/health"
-    }
-
-    droplet_tag        = "website"
-}
-
-
-resource "digitalocean_firewall" "website" {
-    depends_on                = [digitalocean_loadbalancer.website]
-    name                      = "ssh-only"
-
-    tags                      = ["website"]
-
-    inbound_rule {
-        protocol              = "tcp"
-        port_range            = "22"
-        source_tags           = ["sandbox"]
-    }
-
-    inbound_rule {
-        protocol              = "tcp"
-        port_range            = "80"
-        source_tags           = ["website"]
-        source_load_balancer_uids = [digitalocean_loadbalancer.website.id]
-    }
-
-    outbound_rule {
-        protocol              = "tcp"
-        port_range            = "1-65535"
-        destination_addresses = ["0.0.0.0/0", "::/0"]
-    }
-
-    outbound_rule {
-        protocol              = "udp"
-        port_range            = "1-65535"
-        destination_addresses = ["0.0.0.0/0", "::/0"]
-    }
 }

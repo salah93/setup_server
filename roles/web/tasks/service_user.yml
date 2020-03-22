@@ -11,7 +11,7 @@
     accept_hostkey: yes
     dest: "$HOME/{{ appname }}"
     repo: "{{ app_repo_link }}"
-    version: master
+    version: "{{ release }}"
     key_file: "$HOME/.deploy_key"
   notify:
     - delete deploy key
