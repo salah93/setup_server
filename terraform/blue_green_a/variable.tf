@@ -34,5 +34,5 @@ variable "release" {
 }
 
 variable "color" {
-  description = "blue or green"
+  description = "blue/green"
 }

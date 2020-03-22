@@ -1,3 +1,7 @@
+provider "digitalocean" {
+    token  = var.do_token
+}
+
 resource "digitalocean_loadbalancer" "website" {
     name                = "website"
     region              = var.region
@@ -30,6 +34,7 @@ resource "digitalocean_firewall" "website" {
         protocol              = "tcp"
         port_range            = "22"
         source_tags           = ["sandbox"]
+        source_addresses      = [var.access]
     }
 
     inbound_rule {

@@ -29,7 +29,6 @@ resource "digitalocean_database_cluster" "site" {
     region     = var.region
 }
 
-
 output "database-user" {
     value = digitalocean_database_cluster.site.user
 }

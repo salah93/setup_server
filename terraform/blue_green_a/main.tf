@@ -20,8 +20,8 @@ resource "digitalocean_droplet" "website" {
     private_networking = true
     tags = [
         "website",
-        var.release,
-        var.color,
+        replace(var.release, ".", "-"),
+        var.color
     ]
 
     connection {
