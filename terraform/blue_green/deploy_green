@@ -1,0 +1,6 @@
+#!/bin/bash
+set -o
+
+# new release
+TF_VAR_color=green TF_VAR_release=$NEW_RELEASE terraform apply \
+    --state releases/release_$NEW_RELEASE.state
