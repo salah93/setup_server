@@ -28,3 +28,10 @@
     state: absent
     path: /root/git-secret
   become: true
+- name: open port 80
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
