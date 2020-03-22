@@ -7,9 +7,9 @@
       yum:
         name: "*"
         state: latest
-    - name: install rsyslog
-      yum:
-        name: rsyslog
+    - name: install syslog-ng
+      package:
+        name: syslog-ng
         state: latest
     - name: Open port 514/udp
       firewalld:
@@ -24,13 +24,13 @@
         permanent: yes
         immediate: yes
         state: enabled
-    - name: update rsys config
-      copy:
-        src: files/rsyslog.conf
-        dest: /etc/rsyslog.conf
+    - name: add syslog-ng config
+      file:
+        src: files/syslog-ng.conf
+        dest: /etc/syslog-ng/conf.d/app.conf
       notify:
         - enable rsyslog
     - name: add logrotation for app
-      copy:
+      file:
         src: files/app-log-rotate
         dest: /etc/logrotate.d/app
