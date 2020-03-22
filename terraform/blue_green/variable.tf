@@ -28,3 +28,12 @@ variable "ssh_keys" {
 variable "remote_user" {
   description = "remote user"
 }
+
+variable "release" {
+  description = "release version"
+}
+
+variable "color" {
+  description = "blue or green"
+  default     = "green"
+}

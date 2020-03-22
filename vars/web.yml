@@ -5,3 +5,4 @@ private_gpg_key: "{{ vault_private_gpg_key }}"
 private_gpg_key_pass: "{{ vault_private_gpg_key_pass }}"
 private_deploy_key: "{{ vault_private_deploy_key }}"
 app_repo_link: git@github.com:salah93/website
+release: 1.0
