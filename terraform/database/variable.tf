@@ -2,10 +2,6 @@ variable "do_token" {
     description             = "DigitalOcean token"
 }
 
-variable "access_machine" {
-    description             = "ip address of machine to allow access to"
-}
-
 variable "db_name" {
   description               = "database name"
 }

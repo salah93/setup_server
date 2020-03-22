@@ -10,8 +10,8 @@ resource "digitalocean_database_firewall" "site-fw" {
         value = "website"
     }
     rule {
-        type  = "ip_addr"
-        value = var.access_machine
+        type  = "tag"
+        value = "sandbox"
     }
 }
 
