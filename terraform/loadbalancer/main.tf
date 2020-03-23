@@ -2,9 +2,23 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
+resource "digitalocean_domain" "website" {
+    name       = var.domain
+    ip_address = digitalocean_loadbalancer.website.ipv4_address
+}
+
+resource "digitalocean_certificate" "website" {
+  name    = "website"
+  type    = "lets_encrypt"
+  domains = [var.domain]
+}
+
+
 resource "digitalocean_loadbalancer" "website" {
-    name                = "website"
-    region              = var.region
+    name                   = "website"
+    region                 = var.region
+    droplet_tag            = "blue"
+    redirect_http_to_https = true
 
     forwarding_rule {
         entry_port      = 80
@@ -14,13 +28,21 @@ resource "digitalocean_loadbalancer" "website" {
         target_protocol = "http"
     }
 
+    forwarding_rule {
+        entry_port      = 443
+        entry_protocol  = "https"
+
+        target_port     = 80
+        target_protocol = "http"
+
+        certificate_id  = digitalocean_certificate.website.id
+    }
+
     healthcheck {
         port            = 80
         protocol        = "http"
         path            = "/health"
     }
-
-    droplet_tag        = "blue"
 }
 
 

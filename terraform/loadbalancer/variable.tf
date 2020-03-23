@@ -10,3 +10,7 @@ variable "region" {
 variable "access" {
   description         = "ip address of machine you want to run ansible scripts"
 }
+
+variable "domain" {
+  description         = "domain of load balancer"
+}
