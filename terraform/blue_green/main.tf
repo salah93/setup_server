@@ -57,3 +57,8 @@ resource "digitalocean_droplet" "website" {
     }
 
 }
+
+
+output "ips" {
+    value = digitalocean_droplet.website[*].ipv4_address
+}
