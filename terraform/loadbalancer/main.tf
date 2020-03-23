@@ -2,10 +2,6 @@ provider "digitalocean" {
     token  = var.do_token
 }
 
-resource "digitalocean_domain" "website" {
-    name       = var.domain
-    ip_address = digitalocean_loadbalancer.website.ipv4_address
-}
 
 resource "digitalocean_certificate" "website" {
   name    = "website"
