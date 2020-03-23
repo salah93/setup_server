@@ -3,11 +3,6 @@
   become: true
 - import_tasks: git_secret.yml
   become: true
-- name: Install virtualenv via pip
-  pip:
-    name: virtualenv
-    executable: "pip3.8"
-  become: true
 - name: install uwsgi python package
   pip:
     name: ['uwsgi']
