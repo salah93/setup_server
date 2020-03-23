@@ -15,12 +15,12 @@
     key_file: "$HOME/.deploy_key"
   notify:
     - delete deploy key
-- name: install app requirement packages
+- name: install app requirements
   pip:
     requirements: "$HOME/{{ appname }}/requirements.txt"
     virtualenv: "$HOME/{{ appname }}/env"
     virtualenv_python: "python3.8"
-- name: install app requirement packages
+- name: install app
   pip:
     name: "$HOME/{{ appname }}"
     editable: "yes"
