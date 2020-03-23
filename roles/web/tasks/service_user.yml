@@ -1,55 +1,55 @@
 ---
+- name: set deploy/private key paths
+  set_fact:
+    deploy_key_path: /tmp/.deploy
+    gpg_key_path: /tmp/.private
 - name: add deploy key
   template:
     src: templates/deploy_key.j2
-    dest: "$HOME/.deploy_key"
+    dest: "{{ deploy_key_path }}"
     owner: "{{ appname }}"
     group: "{{ appname }}"
     mode: 0400
+- name: create app directory
+  file:
+    state: directory
+    path: "/opt/{{ appname }}"
+    mode: 0700
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
+  become: true
+  become_user: root
+  become_method: sudo
 - name: clone app
   git:
     accept_hostkey: yes
-    dest: "$HOME/{{ appname }}"
+    dest: "/opt/{{ appname }}"
     repo: "{{ app_repo_link }}"
     version: "{{ release }}"
-    key_file: "$HOME/.deploy_key"
+    key_file: "{{ deploy_key_path }}"
   notify:
     - delete deploy key
 - name: install app requirements
   pip:
-    requirements: "$HOME/{{ appname }}/requirements.txt"
-    virtualenv: "$HOME/{{ appname }}/env"
+    requirements: "/opt/{{ appname }}/requirements.txt"
+    virtualenv: "/opt/{{ appname }}/env"
     virtualenv_python: "python3.8"
 - name: install app
   pip:
-    name: "$HOME/{{ appname }}"
+    name: "/opt/{{ appname }}"
     editable: "yes"
-    virtualenv: "$HOME/{{ appname }}/env"
+    virtualenv: "/opt/{{ appname }}/env"
     virtualenv_python: "python3.8"
-- name: link files to /opt
-  file:
-    force: yes
-    state: link
-    path: "{{ item.dest }}"
-    src: "{{ item.src}}"
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
-  with_items:
-    - {"src": "/home/{{ appname }}/{{ appname }}",
-       "dest": "/opt/{{ appname }}"}
-  become: true
-  become_user: root
-  become_method: sudo
 - name: add private key file
   template:
     src: templates/private_key.j2
-    dest: "$HOME/.private_key"
+    dest: "{{ gpg_key_path }}"
     owner: "{{ appname }}"
     group: "{{ appname }}"
     mode: 0400
 - name: import private gpg key
   command:
-    cmd: gpg2  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import $HOME/.private_key
+    cmd: gpg2  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import {{ gpg_key_path }}
 - name: decrypt envrc file
   command:
     cmd: git-secret reveal -p {{ private_gpg_key_pass }}
