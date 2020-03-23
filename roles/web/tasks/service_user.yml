@@ -57,5 +57,4 @@
   environment:
     SECRETS_GPG_COMMAND: gpg2
   notify:
-    - remove git secret repo
     - delete private key
