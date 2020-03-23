@@ -10,8 +10,17 @@
     owner: "{{ appname }}"
     group: "{{ appname }}"
     mode: 0400
+- name: create app directory
+  file:
+    state: directory
+    path: "/opt/{{ appname }}"
+    mode: 0700
+    owner: {{ appname }}
+    group: {{ appname }}
+  become: true
+  become_user: root
+  become_method: sudo
 - name: clone app
-  # possible permissions error
   git:
     accept_hostkey: yes
     dest: "/opt/{{ appname }}"
