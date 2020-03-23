@@ -10,7 +10,7 @@ data "digitalocean_droplet_snapshot" "website" {
 
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
-    name               = format("website-%s", count.index + 1)
+    name               = format("website-%s-%.2d", var.release, count.index)
     image              = data.digitalocean_droplet_snapshot.website.id
     region             = var.region
     size               = var.size
