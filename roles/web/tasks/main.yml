@@ -17,6 +17,7 @@
 - name: add service user
   user:
     name: "{{ appname }}"
+    system: yes
   become: true
 - import_tasks: service_user.yml
   become: true
