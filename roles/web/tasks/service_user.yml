@@ -15,8 +15,8 @@
     state: directory
     path: "/opt/{{ appname }}"
     mode: 0700
-    owner: {{ appname }}
-    group: {{ appname }}
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
   become: true
   become_user: root
   become_method: sudo
