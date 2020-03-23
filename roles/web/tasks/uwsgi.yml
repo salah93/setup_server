@@ -3,7 +3,7 @@
   file:
     state: directory
     path: /etc/uwsgi/vassals
-    mode: 0770
+    mode: 0774
     owner: root
     group: root
 - name: add Emperor uwsgi ini file
@@ -24,6 +24,6 @@
   file:
     state: directory
     path: "/run/{{ appname }}"
-    mode: 0750
+    mode: 0770
     owner: "{{ appname }}"
     group: "nginx"

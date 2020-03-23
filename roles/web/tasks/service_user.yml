@@ -20,12 +20,12 @@
     key_file: "{{ deploy_key_path }}"
   notify:
     - delete deploy key
-- name: install app requirement packages
+- name: install app requirements
   pip:
     requirements: "/opt/{{ appname }}/requirements.txt"
     virtualenv: "/opt/{{ appname }}/env"
     virtualenv_python: "python3.8"
-- name: install app requirement packages
+- name: install app
   pip:
     name: "/opt/{{ appname }}"
     editable: "yes"
@@ -48,5 +48,4 @@
   environment:
     SECRETS_GPG_COMMAND: gpg2
   notify:
-    - remove git secret repo
     - delete private key
