@@ -4,9 +4,11 @@ provider "aws" {
 
 terraform {
     backend "s3" {
-        region         = "us-east-2"
-        bucket         = "salah-terraform-state"
-        dynamodb_table = "salah-terraform-locks"
-        encrypt        = true
+        region               = "us-east-2"
+        bucket               = "salah-terraform-state"
+        dynamodb_table       = "salah-terraform-locks"
+        encrypt              = true
+        workspace_key_prefix = "state"
+        key                  = "release.tfstate"
     }
 }

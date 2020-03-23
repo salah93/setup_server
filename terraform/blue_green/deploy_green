@@ -1,7 +1,5 @@
 #!/bin/bash
-set -u
+set -eu
 
-# new release
-terraform init \
-    -backend-config="key=state/releases/release_${NEW_RELEASE}.tfstate"
+terraform workspace select $NEW_RELEASE
 TF_VAR_color=green TF_VAR_release=$NEW_RELEASE terraform apply
