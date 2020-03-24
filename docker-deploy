@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+get_vars() {
+    source tf.env
+}
+
+get_vars
+cd terraform/blue_green
+terraform init
+./deploy.sh
