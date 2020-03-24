@@ -26,7 +26,7 @@ resource "digitalocean_droplet" "sandbox" {
 
 resource "digitalocean_firewall" "sandbox" {
     depends_on = [digitalocean_droplet.sandbox]
-    name = "ssh-only"
+    name = "sandbox"
 
     tags = [
         "sandbox"
@@ -37,6 +37,26 @@ resource "digitalocean_firewall" "sandbox" {
         port_range       = "22"
         source_addresses = ["0.0.0.0/0", "::/0"]
     }
+    outbound_rule {
+        protocol              = "tcp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
+
+    outbound_rule {
+        protocol              = "udp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
+}
+
+resource "digitalocean_firewall" "logging" {
+    depends_on = [digitalocean_droplet.sandbox]
+    name = "logging"
+
+    tags = [
+        "logging"
+    ]
 
     inbound_rule {
         protocol         = "tcp"
@@ -49,6 +69,25 @@ resource "digitalocean_firewall" "sandbox" {
         port_range       = "514"
         source_tags      = ["website"]
     }
+    outbound_rule {
+        protocol              = "tcp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
+
+    outbound_rule {
+        protocol              = "udp"
+        port_range            = "1-65535"
+        destination_addresses = ["0.0.0.0/0", "::/0"]
+    }
+}
+resource "digitalocean_firewall" "jenkins" {
+    depends_on = [digitalocean_droplet.sandbox]
+    name = "jenkins"
+
+    tags = [
+        "jenkins"
+    ]
 
     inbound_rule {
         protocol         = "tcp"

@@ -51,15 +51,13 @@ resource "digitalocean_firewall" "website" {
     inbound_rule {
         protocol              = "tcp"
         port_range            = "22"
-        source_tags           = ["sandbox"]
-        source_addresses      = [var.access]
+        source_tags           = ["jenkins"]
     }
 
     inbound_rule {
         protocol              = "tcp"
         port_range            = "80"
-        source_tags           = ["sandbox"]
-        source_addresses      = [var.access]
+        source_tags           = ["jenkins"]
         source_load_balancer_uids = [digitalocean_loadbalancer.website.id]
     }
 
