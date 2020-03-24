@@ -21,18 +21,14 @@ variable "ssh_keys" {
     type        = list
 }
 
+variable "color" {
+  description = "blue/green"
+}
+
 variable "remote_user" {
   description = "remote user"
 }
 
-variable "logserver" {
-  description = "ip of centralized log server"
-}
-
 variable "release" {
   description = "release version"
-}
-
-variable "color" {
-  description = "blue/green"
 }
