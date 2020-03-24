@@ -7,5 +7,4 @@ get_vars() {
 
 get_vars
 cd terraform/blue_green
-terraform init
 ./deploy.sh
