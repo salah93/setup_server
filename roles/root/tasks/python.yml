@@ -36,21 +36,21 @@
   tags:
     - build
 
-- name: configure python src with optimizations
+- name: configure python{{ python_version }} src with optimizations
   command:
     cmd: ./configure --prefix=/usr/local --enable-optimizations --with-ensurepip=install --enable-loadable-sqlite-extensions --enable-shared LDFLAGS="-Wl,-rpath,/usr/local/lib"
     chdir: /usr/local/src/Python-{{ python_version }}
   tags:
     - build
 
-- name: compile python
+- name: compile python{{ python_version }}
   command: make -j8 build_all
   args:
     chdir: /usr/local/src/Python-{{ python_version }}
   tags:
     - build
 
-- name: install python
+- name: install python{{ python_version }}
   command: make -j8 altinstall
   args:
     chdir: /usr/local/src/Python-{{ python_version }}
