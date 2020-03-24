@@ -19,4 +19,4 @@ ansible-playbook \
     -e release=${NEW_RELEASE} \
     -e logserver=${LOGSERVER} \
     -i ${IPS} \
-    "web-playbook.yml"
+    ./web-playbook.yml

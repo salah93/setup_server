@@ -10,3 +10,4 @@
   roles:
     - user
     - logging
+    # - jenkins

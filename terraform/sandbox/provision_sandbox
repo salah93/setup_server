@@ -12,11 +12,10 @@ printl provisioning
 sleep 5
 
 IPS=`terraform output -json ips | jq -r '. | join(",")'`,
+
 cd $PLAYBOOK_DIR
 ansible-playbook \
     --vault-password-file ./.ansible-secret \
-    -u ${REMOTE_USER}
+    -u ${REMOTE_USER} \
     -i ${IPS} \
-    --tags=user \
-    -i ${IPS} \
-    "user-playbook.yml"
+    sandbox-playbook.yml
