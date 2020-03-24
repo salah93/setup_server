@@ -37,27 +37,7 @@ resource "digitalocean_droplet" "website" {
             "sudo rm -rf .ansible"
         ]
     }
-
-    provisioner "local-exec" {
-        command = <<EOT
-            ansible-playbook \
-                -u ${var.remote_user} \
-                --vault-password-file ./.ansible-secret \
-                --private-key=${var.private_key} \
-                -e release=${var.release} \
-                -e logserver=${var.logserver} \
-                -i ${self.ipv4_address}, \
-                --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
-                $PLAYBOOK
-            EOT
-        working_dir = "../../"
-        environment = {
-            PLAYBOOK = "web-playbook.yml"
-        }
-    }
-
 }
-
 
 output "ips" {
     value = digitalocean_droplet.website[*].ipv4_address
