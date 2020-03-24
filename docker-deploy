@@ -2,7 +2,7 @@
 set -e
 
 get_vars() {
-    source tf.env
+    source .envrc
 }
 
 get_vars

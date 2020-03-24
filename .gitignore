@@ -9,3 +9,4 @@ __pycache__
 !*.secret
 .ansible-secret
 packer-manifest.json
+.envrc
