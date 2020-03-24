@@ -1,0 +1,6 @@
+---
+- name: remove git secret repo
+  file:
+    state: absent
+    path: /root/git-secret
+  become: true

@@ -19,11 +19,6 @@
     state: absent
     path: "{{ gpg_key_path }}"
   become: true
-- name: remove git secret repo
-  file:
-    state: absent
-    path: /root/git-secret
-  become: true
 - name: open port 80
   firewalld:
     port: 80/tcp
