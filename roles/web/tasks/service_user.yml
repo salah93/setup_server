@@ -1,8 +1,7 @@
 ---
-- name: set deploy/private key paths
+- name: set deploy key paths
   set_fact:
     deploy_key_path: /tmp/.deploy
-    gpg_key_path: /tmp/.private
 - name: add deploy key
   template:
     src: templates/deploy_key.j2
@@ -40,21 +39,3 @@
     editable: "yes"
     virtualenv: "/opt/{{ appname }}/env"
     virtualenv_python: "python3.8"
-- name: add private key file
-  template:
-    src: templates/private_key.j2
-    dest: "{{ gpg_key_path }}"
-    owner: "{{ appname }}"
-    group: "{{ appname }}"
-    mode: 0400
-- name: import private gpg key
-  command:
-    cmd: gpg2  --pinentry-mode=loopback --passphrase {{ private_gpg_key_pass }} --import {{ gpg_key_path }}
-- name: decrypt envrc file
-  command:
-    cmd: git-secret reveal -p {{ private_gpg_key_pass }}
-    chdir: "/opt/{{ appname }}"
-  environment:
-    SECRETS_GPG_COMMAND: gpg2
-  notify:
-    - delete private key

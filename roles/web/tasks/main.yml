@@ -19,6 +19,8 @@
   become: true
   become_user: "{{ appname }}"
   become_method: sudo
+- import_tasks: decrypt_secrets.yml
+  become: true
 - import_tasks: uwsgi.yml
   become: true
 - import_tasks: nginx.yml

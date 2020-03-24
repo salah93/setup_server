@@ -12,17 +12,13 @@
 - name: delete deploy key
   file:
     state: absent
-    path: "$HOME/.deploy_key"
+    path: "{{ deploy_key_path }}"
   become: true
-  become_user: "{{ appname }}"
-  become_method: sudo
 - name: delete private key
   file:
     state: absent
-    path: "$HOME/.private_key"
+    path: "{{ gpg_key_path }}"
   become: true
-  become_user: "{{ appname }}"
-  become_method: sudo
 - name: remove git secret repo
   file:
     state: absent
