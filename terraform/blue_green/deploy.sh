@@ -25,7 +25,7 @@ fail() {
 
 terraform workspace select $NEW_RELEASE >/dev/null 2>&1 || terraform workspace new $NEW_RELEASE > /dev/null 2>&1
 
-printl 'Deploying...'
+printl Deploying... ${NEW_RELEASE}
 
 # 1. deploy_green
 export TF_VAR_color=green
@@ -61,7 +61,7 @@ sleep 5
 export OLD_RELEASE=${OLD_SHA::10}
 if terraform workspace select $OLD_RELEASE >/dev/null 2>&1
 then
-    printl 'destroying old'
+    printl destroying old ${OLD_RELEASE}
     # 3. blue_to_green
     export TF_VAR_color=green
     export TF_VAR_release=$OLD_RELEASE
