@@ -4,17 +4,4 @@ set -eu
 terraform workspace select $NEW_RELEASE
 TF_VAR_color=green TF_VAR_release=$NEW_RELEASE terraform apply
 
-PLAYBOOK_DIR=../../
-
-IPS=`terraform output -json ips | jq -r '. | join(",")'`,
-
-cd $PLAYBOOK_DIR
-ansible-playbook \
-    --vault-password-file ./.ansible-secret \
-    -u ${REMOTE_USER} \
-    --private-key=${SSH_KEY_PATH} \
-    -e release=${NEW_RELEASE} \
-    -e logserver=${LOGSERVER} \
-    -i ${IPS}, \
-    --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
-    "web-playbook.yml"
+PLAYBOOK_DIR=../../ ./provision_servers
