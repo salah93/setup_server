@@ -26,7 +26,6 @@ resource "digitalocean_droplet" "website" {
 
     connection {
         type        = "ssh"
-        private_key = file(var.private_key)
         user        = var.remote_user
         host        = self.ipv4_address
         timeout     = "3m"

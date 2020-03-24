@@ -16,7 +16,6 @@ RUN apk add curl
 
 COPY . /app
 
-ENV SSH_KEY_PATH /app/ssh/id_rsa
 ENV PLAYBOOK_DIR /app/
 
 WORKDIR /app

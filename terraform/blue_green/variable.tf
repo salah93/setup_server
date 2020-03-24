@@ -16,10 +16,6 @@ variable "node_count" {
     default     = "1"
 }
 
-variable "private_key" {
-  description = "private key"
-}
-
 variable "ssh_keys" {
     description = "ssh key ids for digital ocean"
     type        = list

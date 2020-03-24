@@ -7,7 +7,6 @@ cd $PLAYBOOK_DIR
 ansible-playbook \
     --vault-password-file ./.ansible-secret \
     -u ${REMOTE_USER} \
-    --private-key=${SSH_KEY_PATH} \
     -e release=${NEW_RELEASE} \
     -e logserver=${LOGSERVER} \
     -i ${IPS}, \
