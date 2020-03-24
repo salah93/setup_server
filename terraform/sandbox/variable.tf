@@ -11,20 +11,7 @@ variable "region" {
   default     = "nyc1"
 }
 
-variable "node_count" {
-    description = "Node count"
-    default     = "1"
-}
-
-variable "private_key" {
-  description = "private key"
-}
-
 variable "ssh_keys" {
     description = "ssh key ids for digital ocean"
     type        = list
-}
-
-variable "remote_user" {
-  description = "remote user"
 }

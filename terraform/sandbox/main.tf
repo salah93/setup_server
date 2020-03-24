@@ -9,8 +9,7 @@ data "digitalocean_droplet_snapshot" "website" {
 }
 
 resource "digitalocean_droplet" "sandbox" {
-    name               = format("sandbox-%s", count.index + 1)
-    count              = var.node_count
+    name               = "sandbox"
     image              = data.digitalocean_droplet_snapshot.website.id
     region             = var.region
     size               = var.size
@@ -21,31 +20,6 @@ resource "digitalocean_droplet" "sandbox" {
     tags               = [
         "sandbox"
     ]
-
-    connection {
-        type        = "ssh"
-        private_key = file(var.private_key)
-        user        = var.remote_user
-        host        = self.ipv4_address
-        timeout     = "3m"
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "sudo rm -rf .ansible"
-        ]
-    }
-
-    provisioner "local-exec" {
-        command = <<EOT
-            ansible-playbook -u ${var.remote_user} --private-key=${var.private_key} -i ${self.ipv4_address}, --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --tags=user $PLAYBOOK
-            EOT
-        working_dir = "../../"
-        environment = {
-            PLAYBOOK = "user-playbook.yml"
-        }
-    }
-
 }
 
 resource "digitalocean_firewall" "sandbox" {
