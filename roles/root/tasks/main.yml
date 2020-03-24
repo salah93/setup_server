@@ -20,5 +20,9 @@
   become: true
 - import_tasks: selinux.yml
   become: true
+  tags:
+    - selinux
 - import_tasks: git_secret.yml
   become: true
+  tags:
+    - git-secret
