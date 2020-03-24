@@ -10,5 +10,4 @@ ansible-playbook \
     -e release=${NEW_RELEASE} \
     -e logserver=${LOGSERVER} \
     -i ${IPS}, \
-    --ssh-extra-args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" \
     "web-playbook.yml"

@@ -23,19 +23,6 @@ resource "digitalocean_droplet" "website" {
         replace(var.release, ".", "-"),
         var.color
     ]
-
-    connection {
-        type        = "ssh"
-        user        = var.remote_user
-        host        = self.ipv4_address
-        timeout     = "3m"
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "sudo rm -rf .ansible"
-        ]
-    }
 }
 
 output "ips" {
