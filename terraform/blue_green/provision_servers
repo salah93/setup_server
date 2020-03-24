@@ -18,5 +18,5 @@ ansible-playbook \
     -u ${REMOTE_USER} \
     -e release=${NEW_RELEASE} \
     -e logserver=${LOGSERVER} \
-    -i ${IPS}, \
+    -i ${IPS} \
     "web-playbook.yml"
