@@ -9,6 +9,8 @@
     owner: "{{ appname }}"
     group: "{{ appname }}"
     mode: 0400
+  notify:
+    - delete deploy key
 - name: create app directory
   file:
     state: directory
@@ -26,8 +28,6 @@
     repo: "{{ app_repo_link }}"
     version: "{{ release }}"
     key_file: "{{ deploy_key_path }}"
-  notify:
-    - delete deploy key
 - name: install app requirements
   pip:
     requirements: "/opt/{{ appname }}/requirements.txt"

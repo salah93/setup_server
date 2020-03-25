@@ -6,7 +6,3 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - load uwsgi
-    - load nginx
-    - open port 80

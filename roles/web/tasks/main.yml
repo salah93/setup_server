@@ -23,3 +23,10 @@
   become: true
 - import_tasks: systemd.yml
   become: true
+- name: (re)start services
+  debug:
+    msg: trigger
+  changed_when: true
+  notify:
+    - load uwsgi
+    - load nginx
