@@ -8,6 +8,10 @@ data "digitalocean_droplet_snapshot" "website" {
     most_recent = true
 }
 
+data "digitalocean_droplet" "logserver" {
+    tag = "logging"
+}
+
 resource "digitalocean_droplet" "website" {
     count              = var.node_count
     name               = format("website-%s-%.2d", var.release, count.index)
@@ -27,4 +31,8 @@ resource "digitalocean_droplet" "website" {
 
 output "ips" {
     value = digitalocean_droplet.website[*].ipv4_address
+}
+
+output "logserver" {
+    value = data.digitalocean_droplet.logserver.ipv4_address
 }
