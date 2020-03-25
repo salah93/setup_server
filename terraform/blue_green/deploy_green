@@ -1,7 +1,0 @@
-#!/bin/bash
-set -eu
-
-terraform workspace select $NEW_RELEASE
-TF_VAR_color=green TF_VAR_release=$NEW_RELEASE terraform apply
-
-PLAYBOOK_DIR=../../ ./provision_servers

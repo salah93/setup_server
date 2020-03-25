@@ -1,5 +1,0 @@
-#!/bin/bash
-set -eu
-
-terraform workspace select $OLD_RELEASE
-TF_VAR_color=green TF_VAR_release=$OLD_RELEASE terraform destroy
