@@ -59,15 +59,18 @@ terraform apply -auto-approve
 sleep 5
 
 export OLD_RELEASE=${OLD_SHA::10}
-if terraform workspace select $OLD_RELEASE >/dev/null 2>&1
+if [[ $OLD_RELEASE != $NEW_RELEASE ]]
 then
-    printl destroying old ${OLD_RELEASE}
-    # 3. blue_to_green
-    export TF_VAR_color=green
-    export TF_VAR_release=$OLD_RELEASE
-    terraform apply -auto-approve
+    if terraform workspace select $OLD_RELEASE >/dev/null 2>&1
+    then
+        printl destroying old ${OLD_RELEASE}
+        # 3. blue_to_green
+        export TF_VAR_color=green
+        export TF_VAR_release=$OLD_RELEASE
+        terraform apply -auto-approve
 
-    # TODO: schedule this after X minutes
-    # 4. destroy_old
-    terraform destroy -auto-approve
+        # TODO: schedule this after X minutes
+        # 4. destroy_old
+        terraform destroy -auto-approve
+    fi
 fi
