@@ -32,7 +32,6 @@ export TF_VAR_color=green
 export TF_VAR_release=$NEW_RELEASE
 if terraform apply -auto-approve
 then
-    printl 'Provisioning... '
     if ./provision_servers
     then
         printl 'testing...'
