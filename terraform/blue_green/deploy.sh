@@ -56,7 +56,7 @@ printl 'green to blue'
 # 2. green_to_blue
 export TF_VAR_color=blue
 terraform apply -auto-approve
-sleep 5
+sleep 30
 
 export OLD_RELEASE=${OLD_SHA::10}
 if [[ $OLD_RELEASE != $NEW_RELEASE ]]
@@ -68,6 +68,7 @@ then
         export TF_VAR_color=green
         export TF_VAR_release=$OLD_RELEASE
         terraform apply -auto-approve
+        sleep 120
 
         # TODO: schedule this after X minutes
         # 4. destroy_old
