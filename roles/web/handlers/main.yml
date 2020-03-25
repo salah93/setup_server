@@ -3,11 +3,13 @@
   service:
     name: emperor.uwsgi.service
     state: restarted
+    enabled: true
   become: true
 - name: load nginx
   service:
     name: nginx
     state: restarted
+    enabled: true
   become: true
 - name: delete deploy key
   file:
