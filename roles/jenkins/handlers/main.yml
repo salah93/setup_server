@@ -1,0 +1,26 @@
+---
+- name: Open http port
+  firewalld:
+    service: http
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+- name: start jenkins
+  service:
+    name: jenkins
+    state: restarted
+    enabled: true
+  become: true
+- name: start nginx
+  service:
+    name: jenkins
+    state: restarted
+    enabled: true
+  become: true
+- name: start docker
+  service:
+    name: docker
+    state: started
+    enabled: true
+  become: true

@@ -1,0 +1,27 @@
+---
+- name: jenkins
+  become: true
+  tags:
+    - jenkins
+  block:
+    - name: update yum
+      yum:
+        name: "*"
+        state: latest
+    - name: install java
+      package: 
+        name:
+          - java-11-openjdk
+        state: present
+    - include_tasks: jenkins.yml
+      become: true
+    - include_tasks: docker.yml
+      become: true
+    - name: start services
+      debug:
+        msg: starting services
+      changed_when: true
+      notify:
+        - start docker
+        - start jenkins
+        - start nginx

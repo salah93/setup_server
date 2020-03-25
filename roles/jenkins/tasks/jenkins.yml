@@ -1,0 +1,20 @@
+---
+- name: install jenkins repo
+  get_url:
+    url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
+    dest:/etc/yum.repos.d/jenkins.repo
+- name: import rpm key
+  rpm_key:
+    key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+- name: install jenkins
+  package:
+    name: jenkins
+- name: add nginx conf
+  template:
+    src: templates/jenkins.conf.j2
+    dest: /etc/nginx/conf.d/jenkins.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - open http port

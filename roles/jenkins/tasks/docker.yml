@@ -1,0 +1,45 @@
+---
+- name: install dnf plugins
+  package:
+    name:
+      - dnf-plugins-core
+      - grubby
+- name: install docker
+  # $ sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+  # $ sudo dnf install docker-ce docker-ce-cli containerd.io
+  package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    enablerepo: https://download.docker.com/linux/fedora/docker-ce.repo
+- name: Cgroups Exception For Fedora 31
+  command: grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+  when:
+    - ansible_distribution == 'Fedora'
+    - ansible_distribution_major_version == '31'
+- name: check if jenkins user exists
+  shell: grep jenkins /etc/passwd && /bin/true
+  ignore_errors: yes
+  register: jenkins_user
+- name: debug
+  debug:
+    msg: "{{ jenkins_user }}"
+- name: ensure jenkins user exists
+  fail:
+    msg: expected jenkins user
+  when: jenkins_user.failed
+- name: add jenkins user to docker group
+  user:
+    name: jenkins
+    append: yes
+    create_home: no
+    system: yes
+    groups:
+      - docker
+- name: add system user to docker group
+  user:
+    name: "{{ username }}"
+    append: yes
+    groups:
+      - docker
