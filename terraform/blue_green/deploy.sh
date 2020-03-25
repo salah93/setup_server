@@ -23,12 +23,18 @@ fail() {
     exit
 }
 
-terraform workspace select $NEW_RELEASE >/dev/null 2>&1 || terraform workspace new $NEW_RELEASE > /dev/null 2>&1
+if terraform workspace select $NEW_RELEASE >/dev/null 2>&1
+then
+    export TF_VAR_color=blue
+    printl Updating... ${NEW_RELEASE}
+else
+    terraform workspace new $NEW_RELEASE > /dev/null 2>&1
+    export TF_VAR_color=green
+    printl Deploying... ${NEW_RELEASE}
+fi
 
-printl Deploying... ${NEW_RELEASE}
 
 # 1. deploy_green
-export TF_VAR_color=green
 export TF_VAR_release=$NEW_RELEASE
 if terraform apply -auto-approve
 then
@@ -51,8 +57,12 @@ else
     fail
 fi
 
-printl 'green to blue'
-# 2. green_to_blue
+if [[ $TF_VAR_color == 'green' ]]
+then
+    # 2. green_to_blue
+    printl 'green to blue'
+fi
+
 export TF_VAR_color=blue
 terraform apply -auto-approve
 sleep 30
