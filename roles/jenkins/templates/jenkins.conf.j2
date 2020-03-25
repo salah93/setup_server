@@ -1,14 +1,50 @@
-server {
-    listen 80;
-    server_name jenkins.{{ domain }};
+upstream jenkins {
+  keepalive 32; # keepalive connections
+  server 127.0.0.1:8080; # jenkins ip and port
+}
 
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_read_timeout  90;
-        proxy_set_header X-Forwarded-Host $host:$server_port;
-        proxy_set_header X-Forwarded-Server $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Real-IP $remote_addr;
-    }   
+server {
+  listen 80;
+  server_name jenkins.{{ domain }};
+
+  access_log      /var/log/nginx/jenkins/access.log;
+  error_log       /var/log/nginx/jenkins/error.log;
+  ignore_invalid_headers off; #pass through headers from Jenkins which are considered invalid by Nginx server.
+
+  location /userContent {
+    #have nginx handle all the static requests to the userContent folder files
+    #note : This is the $JENKINS_HOME dir
+	root /var/lib/jenkins/;
+    if (!-f $request_filename){
+      #this file does not exist, might be a directory or a /**view** url
+      rewrite (.*) /$1 last;
+	  break;
+    }
+	sendfile on;
+  }
+
+  location / {
+      sendfile off;
+      proxy_pass         http://jenkins;
+      proxy_redirect     default;
+      proxy_http_version 1.1;
+
+      proxy_set_header   Host              $host;
+      proxy_set_header   X-Real-IP         $remote_addr;
+      proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+      proxy_set_header   X-Forwarded-Proto $scheme;
+      proxy_max_temp_file_size 0;
+
+      #this is the maximum upload size
+      client_max_body_size       10m;
+      client_body_buffer_size    128k;
+
+      proxy_connect_timeout      90;
+      proxy_send_timeout         90;
+      proxy_read_timeout         90;
+      proxy_buffering            off;
+      proxy_request_buffering    off; # Required for HTTP CLI commands in Jenkins > 2.54
+      proxy_set_header Connection ""; # Clear for keepalive
+  }
+
 }
