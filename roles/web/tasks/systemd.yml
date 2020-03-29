@@ -2,7 +2,7 @@
 - name: add systemd services for consumers
   copy:
     src: templates/consumer.uwsgi.service.j2
-    dest: /etc/systemd/system/{{ item }}@.uwsgi.service
+    dest: "/etc/systemd/system/{{ item }}@.uwsgi.service"
     owner: root
     group: root
     mode: 0644
