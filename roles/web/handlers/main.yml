@@ -11,6 +11,13 @@
     state: restarted
     enabled: true
   become: true
+- name: load consumers
+  service:
+    name: "{{ item }}@{1..2}"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
 - name: delete deploy key
   file:
     state: absent

@@ -1,0 +1,15 @@
+[Unit]
+Description=Kafka Consumer
+After=syslog.target
+
+[Service]
+User={{ appname }}
+Group={{ appname }}
+EnvironmentFile=/opt/{{ appname }}/{{ web_env }}.envrc
+ExecStart=/opt/{{ appname }}/env/bin/{{ item }}
+Restart=always
+KillSignal=SIGTERM
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
