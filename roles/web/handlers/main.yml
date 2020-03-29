@@ -11,9 +11,16 @@
     state: restarted
     enabled: true
   become: true
-- name: load consumers
+- name: load consumers 1
   service:
-    name: "{{ item }}@{1..2}"
+    name: "{{ item }}@1"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
+- name: load consumers 2
+  service:
+    name: "{{ item }}@2"
     state: restarted
     enabled: true
   become: true
