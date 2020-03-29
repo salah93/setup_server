@@ -28,6 +28,7 @@
     msg: trigger
   changed_when: true
   notify:
-    - load consumers
+    - load consumers 1
+    - load consumers 2
     - load uwsgi
     - load nginx
