@@ -25,6 +25,34 @@
     enabled: true
   become: true
   loop: "{{ consumers }}"
+- name: load consumers 3
+  service:
+    name: "{{ item }}@2"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
+- name: load consumers 4
+  service:
+    name: "{{ item }}@2"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
+- name: load consumers 5
+  service:
+    name: "{{ item }}@2"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
+- name: load consumers 6
+  service:
+    name: "{{ item }}@2"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ consumers }}"
 - name: delete deploy key
   file:
     state: absent

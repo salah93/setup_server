@@ -30,5 +30,9 @@
   notify:
     - load consumers 1
     - load consumers 2
+    - load consumers 3
+    - load consumers 4
+    - load consumers 5
+    - load consumers 6
     - load uwsgi
     - load nginx
