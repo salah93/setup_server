@@ -1,8 +1,8 @@
 ---
 - name: add systemd services for single run scripts
-  copy:
+  template:
     src: templates/services.service.j2
-    dest: "/etc/systemd/system/{{ item }}.uwsgi.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
     owner: root
     group: root
     mode: 0644
