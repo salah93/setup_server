@@ -17,15 +17,16 @@
 - name: install pymongo
   pip:
     name: ['pymongo']
-- name: (re)start services
-  debug:
-    msg: trigger
-  changed_when: true
-  notify:
-    - load mongo
+    executable: /usr/bin/pip3
+- name: load mongo
+  service:
+    name: mongod
+    state: restarted
+    enabled: true
+  become: true
 - name: create mongodb admin user
   mongodb_user:
-    database: admin,
+    database: admin
     user: admin
     password: "{{ mongo_admin_password }}"
     state: present
@@ -39,3 +40,15 @@
     password: "{{ mongo_password }}"
     state: present
     roles: readWrite
+- name: add security authorization
+  blockinfile:
+    path: /etc/mongod.conf
+    block: |
+      security:
+        authorization: enabled
+- name: (re)start services
+  debug:
+    msg: trigger
+  changed_when: true
+  notify:
+    - load mongo
