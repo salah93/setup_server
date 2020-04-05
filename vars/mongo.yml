@@ -1,0 +1,5 @@
+---
+mongo_db: site
+mongo_user: site
+mongo_admin_password: "{{ vault_mongo_admin_password }}"
+mongo_password: "{{ vault_mongo_password }}"
