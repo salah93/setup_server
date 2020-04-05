@@ -14,9 +14,28 @@
       - mongodb-org-shell-4.2.5
       - mongodb-org-mongos-4.2.5
       - mongodb-org-tools-4.2.5
+- name: install pymongo
+  pip:
+    name: ['pymongo']
 - name: (re)start services
   debug:
     msg: trigger
   changed_when: true
   notify:
     - load mongo
+- name: create mongodb admin user
+  mongodb_user:
+    database: admin,
+    user: admin
+    password: "{{ mongo_admin_password }}"
+    state: present
+    roles: userAdminAnyDatabase,readWriteAnyDatabase
+- name: create mongodb user
+  mongodb_user:
+    login_user: admin
+    login_password: "{{ mongo_admin_password }}"
+    database: "{{ mongo_db }}"
+    user: "{{ mongo_user }}"
+    password: "{{ mongo_password }}"
+    state: present
+    roles: readWrite
