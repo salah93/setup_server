@@ -1,0 +1,41 @@
+---
+- name: set deploy key paths
+  set_fact:
+    deploy_key_path: /tmp/.deploy
+- name: add deploy key
+  template:
+    src: templates/deploy_key.j2
+    dest: "{{ deploy_key_path }}"
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
+    mode: 0400
+  notify:
+    - delete deploy key
+- name: create app directory
+  file:
+    state: directory
+    path: "/opt/{{ appname }}"
+    mode: 0700
+    owner: "{{ appname }}"
+    group: "{{ appname }}"
+  become: true
+  become_user: root
+  become_method: sudo
+- name: clone app
+  git:
+    accept_hostkey: yes
+    dest: "/opt/{{ appname }}"
+    repo: "{{ app_repo_link }}"
+    version: "{{ release }}"
+    key_file: "{{ deploy_key_path }}"
+- name: install app requirements
+  pip:
+    requirements: "/opt/{{ appname }}/requirements.txt"
+    virtualenv: "/opt/{{ appname }}/env"
+    virtualenv_python: "python3.8"
+- name: install app
+  pip:
+    name: "/opt/{{ appname }}"
+    editable: "yes"
+    virtualenv: "/opt/{{ appname }}/env"
+    virtualenv_python: "python3.8"

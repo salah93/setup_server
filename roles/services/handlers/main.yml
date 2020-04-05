@@ -1,0 +1,67 @@
+---
+- name: open websocket port
+  firewalld:
+    port: "{{ websocket_port }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: true
+- name: load single-run scripts
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ single_services }}"
+- name: load multi-run scripts 1
+  service:
+    name: "{{ item }}@1"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 2
+  service:
+    name: "{{ item }}@2"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 3
+  service:
+    name: "{{ item }}@3"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 4
+  service:
+    name: "{{ item }}@4"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 5
+  service:
+    name: "{{ item }}@5"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 6
+  service:
+    name: "{{ item }}@6"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: delete deploy key
+  file:
+    state: absent
+    path: "{{ deploy_key_path }}"
+  become: true
+- name: delete private key
+  file:
+    state: absent
+    path: "{{ gpg_key_path }}"
+  become: true

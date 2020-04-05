@@ -1,10 +1,4 @@
 ---
-- name: install uwsgi python package
-  pip:
-    name: ['uwsgi']
-    virtualenv: "/root/venvs/uwsgi"
-    virtualenv_python: "python3.8"
-    version: "2.0.18"
 - name: add service user
   user:
     name: "{{ appname }}"
@@ -17,10 +11,6 @@
   become_method: sudo
 - import_tasks: decrypt_secrets.yml
   become: true
-- import_tasks: uwsgi.yml
-  become: true
-- import_tasks: nginx.yml
-  become: true
 - import_tasks: systemd.yml
   become: true
 - name: (re)start services
@@ -28,5 +18,13 @@
     msg: trigger
   changed_when: true
   notify:
+    - open websocket port
+    - load single-run scripts
+    - load multi-run scripts 1
+    - load multi-run scripts 2
+    - load multi-run scripts 3
+    - load multi-run scripts 4
+    - load multi-run scripts 5
+    - load multi-run scripts 6
     - load uwsgi
     - load nginx
