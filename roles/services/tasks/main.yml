@@ -26,5 +26,3 @@
     - load multi-run scripts 4
     - load multi-run scripts 5
     - load multi-run scripts 6
-    - load uwsgi
-    - load nginx
