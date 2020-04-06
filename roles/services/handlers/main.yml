@@ -55,6 +55,104 @@
     enabled: true
   become: true
   loop: "{{ multi_services }}"
+- name: load multi-run scripts 7
+  service:
+    name: "{{ item }}@7"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 8
+  service:
+    name: "{{ item }}@8"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 9
+  service:
+    name: "{{ item }}@9"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 10
+  service:
+    name: "{{ item }}@10"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 11
+  service:
+    name: "{{ item }}@11"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 12
+  service:
+    name: "{{ item }}@12"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 13
+  service:
+    name: "{{ item }}@13"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 14
+  service:
+    name: "{{ item }}@14"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 15
+  service:
+    name: "{{ item }}@15"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 16
+  service:
+    name: "{{ item }}@16"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 17
+  service:
+    name: "{{ item }}@17"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 18
+  service:
+    name: "{{ item }}@18"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 19
+  service:
+    name: "{{ item }}@19"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
+- name: load multi-run scripts 20
+  service:
+    name: "{{ item }}@20"
+    state: restarted
+    enabled: true
+  become: true
+  loop: "{{ multi_services }}"
 - name: delete deploy key
   file:
     state: absent
