@@ -9,7 +9,7 @@
   user:
     name: "{{ appname }}"
     system: yes
-    create_home: no
+    create_home: yes
   become: true
 - import_tasks: service_user.yml
   become: true
