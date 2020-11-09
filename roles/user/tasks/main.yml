@@ -1,4 +1,39 @@
 ---
+- name: install build tools
+  yum:
+    state: latest
+    name: "@Development tools"
+  become: true
+  when: ansible_distribution == 'Fedora'
+- name: install rest of build tools
+  become: true
+  package:
+    state: latest
+    name:
+      - make
+      - automake
+      - gcc
+      - cmake
+      - gcc-c++
+      - kernel-devel
+  when: ansible_distribution == 'Fedora'
+- name: install useful packages
+  become: true
+  package:
+    state: latest
+    name:
+      - ctags
+      - jq
+      - direnv
+      - ripgrep
+      - tmux
+      - bzip2
+      - bzip2-devel
+      - wget
+      - zlib-devel
+      - gzip
+      - fd-find
+      - fish
 - import_tasks: user.yml
   tags:
     - user
