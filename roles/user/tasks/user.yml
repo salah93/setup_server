@@ -50,5 +50,9 @@
        "dest": "$HOME/.vimrc"}
     - {"src": "$HOME/Projects/dotfiles/tmux.conf",
        "dest": "$HOME/.tmux.conf"}
+    - {"src": "$HOME/Projects/dotfiles/config.fish",
+       "dest": "$HOME/.config/fish"}
+    - {"src": "$HOME/Projects/dotfiles/fish-functions",
+       "dest": "$HOME/.config/fish/functions"}
     - {"src": "$HOME/Projects/scripts",
        "dest": "$HOME/.scripts"}
